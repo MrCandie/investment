@@ -20,8 +20,8 @@ export default function Deposit() {
   }
 
   return (
-    <div className="w-full h-[90vh] flex items-center justify-center bg-orange-200">
-      <div className="w-[90%] h-[700px] md:w-[60%] lg:w-[40%] p-4 bg-orange-500 rounded-xl">
+    <div className="w-full h-[90vh] lg:h-full flex items-center justify-center bg-orange-200">
+      <div className="w-[90%] my-8  h-[700px] md:w-[60%] lg:w-[40%] p-4 bg-orange-500 rounded-xl">
         <h1 className="capitalize text-lg lg:text-xl text-white font-bold text-start">
           make a deposit
         </h1>

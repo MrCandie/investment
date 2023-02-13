@@ -36,7 +36,7 @@
   @apply flex items-center justify-around space-x-8;
 }
 .overlay {
-  @apply fixed top-0 bottom-0 right-0 left-0 w-full h-full bg-[rgba(0,0,0,0.1)] z-10;
+  @apply fixed top-0 bottom-0 right-0 left-0 w-full h-full bg-[rgba(0,0,0,0.25)] z-10;
 }
 .hr {
   @apply border-none border-b-2 w-full h-[2px] bg-orange-700;
@@ -48,7 +48,7 @@
   @apply w-[90%] md:w-[60%] lg:w-[40%] p-6 flex flex-col space-y-8 rounded-xl shadow-xl  z-30 absolute top-40 lg:top-20 left-5 md:left-[20%] lg:left-[30%];
 }
 .input-container {
-  @apply flex flex-col space-y-4;
+  @apply flex flex-col space-y-2;
 }
 .text {
   @apply font-bold text-center uppercase text-lg lg:text-xl;
@@ -59,9 +59,33 @@
 .plan {
   @apply text-lg lg:text-2xl font-bold text-orange-900 uppercase;
 }
+.mobile {
+  @apply w-[90%] mx-auto shadow-lg rounded-lg lg:w-[40%] md:w-[60%] p-4;
+}
+.icon {
+  @apply text-base text-white cursor-pointer;
+}
+.menu {
+  @apply w-full p-3 hover:opacity-80 hover:bg-orange-500 transition-all duration-300 cursor-pointer flex items-center justify-between;
+}
+.label-white-bg {
+  @apply capitalize text-base lg:text-xl  font-semibold text-start;
+}
+.nav-icon {
+  @apply text-2xl text-white cursor-pointer;
+}
 ::-webkit-scrollbar {
   width: 5px;
   height: 0px;
+}
+.navBottom {
+  @apply flex w-[25%] hover:bg-orange-700 flex-col items-center p-3 space-y-2;
+}
+.navBottomActive {
+  @apply flex w-[25%] bg-orange-700 flex-col items-center p-3 space-y-2;
+}
+.bg {
+  @apply h-[90vh] lg:h-full flex items-center justify-center bg-orange-200;
 }
 
 /* Track */
