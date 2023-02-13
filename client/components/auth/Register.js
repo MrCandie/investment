@@ -27,7 +27,7 @@ export default function Register() {
   return (
     <div className="w-full h-[100vh] flex items-center justify-center bg-orange-100">
       <div className="bg-orange-400 w-[90%] lg:w-[40%] p-8 rounded-lg shadow-xl flex flex-col space-y-10">
-        <h1 className="text-orange-800 text-center text-3xl capitalize font-bold">
+        <h1 className="text-orange-800 text-center text-lg lg:text-3xl capitalize font-bold">
           sign up
         </h1>
         <form onSubmit={signupHandler} className="flex flex-col space-y-6">

@@ -6,9 +6,7 @@ export default function Golden() {
   return (
     <Fragment>
       <div className="p-4 flex flex-col space-y-6">
-        <h1 className="text-2xl font-bold text-orange-900 uppercase">
-          golden plan
-        </h1>
+        <h1 className="plan">golden plan</h1>
         <div className="flex items-center justify-between">
           <div className="flex flex-col space-y-2">
             <h2 className="h2">deposit amount</h2>
@@ -21,9 +19,7 @@ export default function Golden() {
         </div>
         <form className="flex flex-col space-y-6">
           <div className="flex flex-col space-y-2">
-            <label className="capitalize text-xl text-white font-semibold text-start">
-              enter amount
-            </label>
+            <label className="label">enter amount</label>
             <input
               className="input"
               type="number"
@@ -32,9 +28,7 @@ export default function Golden() {
             />
           </div>
           <div className="flex flex-col space-y-2">
-            <label className="capitalize text-xl text-white font-semibold text-start">
-              select assets to deposit
-            </label>
+            <label className="label">select assets to deposit</label>
             <select className="select">
               <option className="capitalize" value="">
                 select an asset

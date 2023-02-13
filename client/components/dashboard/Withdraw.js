@@ -4,7 +4,7 @@ export default function Withdraw({ setShow }) {
   return (
     <Fragment>
       <div className="overlay"></div>
-      <div className="popup bg-orange-400">
+      <div className="popup bg-orange-600">
         <h1 className="text text-white">initiate a withdrawal</h1>
         <hr className="hr" />
         <form className="flex flex-col space-y-6">

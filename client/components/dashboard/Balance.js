@@ -12,7 +12,7 @@ import { TbSend } from "react-icons/tb";
 export default function Balance({ setShow }) {
   return (
     <Swiper
-      spaceBetween={30}
+      spaceBetween={10}
       slidesPerView="1.1"
       modules={[Pagination]}
       className="flex h-[250px] w-full"
