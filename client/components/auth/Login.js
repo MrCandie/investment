@@ -1,0 +1,52 @@
+import React, { useState } from "react";
+import Link from "next/link";
+
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function loginHandler(e) {
+    e.preventDefault();
+
+    const data = {
+      email,
+      password,
+    };
+    console.log(data);
+  }
+  return (
+    <div className="w-full h-[100vh] flex items-center justify-center bg-orange-100">
+      <div className="bg-orange-400 w-[90%] lg:w-[40%] p-8 rounded-lg shadow-xl flex flex-col space-y-10">
+        <h1 className="text-orange-800 text-center text-3xl capitalize font-bold">
+          log in
+        </h1>
+        <form onSubmit={loginHandler} className="flex flex-col space-y-6">
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            className="input"
+            type="email"
+            placeholder="Email"
+          />
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            className="input"
+            type="password"
+            placeholder="Password"
+          />
+          <p className="m-0 text-white text-lg capitalize font-normal cursor-pointer">
+            forgot password?
+          </p>
+          <button className="button">login</button>
+        </form>
+        <p className="flex items-center capitalize text-white text-sm md:text-lg space-x-2 justify-center ">
+          don't have an account?
+          <Link href="/account/register" className="text-white underline">
+            register here
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+}

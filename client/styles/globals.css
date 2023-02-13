@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nav-item {
+  @apply flex items-center h-full  capitalize text-xl font-medium text-black hover:opacity-70  p-4 lg:p-0 transition-all duration-300;
+}
+.nav-link {
+  @apply flex items-center w-full;
+}
+.input {
+  @apply p-2 text-lg text-black font-normal rounded-lg bg-white outline-none border-none focus:shadow-xl;
+}
+.button {
+  @apply py-3 px-4 bg-orange-800 text-white text-xl font-semibold hover:opacity-80 transition-all duration-300 capitalize rounded-lg shadow-lg hover:shadow-xl;
+}
+.action-btn {
+  @apply text-xl p-4 cursor-pointer rounded-full shadow-md hover:opacity-80 active:shadow-xl transition-all duration-300 bg-orange-600 text-white flex items-center;
+}
+.h2 {
+  @apply text-lg text-white font-medium capitalize;
+}
+.h4 {
+  @apply text-sm text-[#eee] font-normal capitalize;
+}
+.select {
+  @apply p-4 border-none rounded-lg bg-white;
+}
+.confirm {
+  @apply flex items-center justify-between;
+}
+.confirm-p {
+  @apply text-lg  text-black font-normal capitalize;
+}
+.action {
+  @apply flex items-center justify-around space-x-8;
+}
+.overlay {
+  @apply fixed top-0 bottom-0 right-0 left-0 w-full h-full bg-[rgba(0,0,0,0.1)] z-10;
+}
+.hr {
+  @apply border-none border-b-2 w-full h-[2px] bg-orange-700;
+}
+.label {
+  @apply capitalize text-xl text-white font-semibold text-center;
+}
+.popup {
+  @apply w-[90%] md:w-[60%] lg:w-[40%] p-6 flex flex-col space-y-8 rounded-xl shadow-xl  z-30 absolute top-40 lg:top-20 left-5 md:left-[20%] lg:left-[30%];
+}
+.input-container {
+  @apply flex flex-col space-y-4;
+}
+.text {
+  @apply font-bold text-center uppercase text-xl;
+}
+.balance-container {
+  @apply flex flex-col h-[200px] space-y-6 bg-orange-900 p-4 rounded-xl;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  height: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  /* border-radius: 10px; */
+  height: 3px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: orangered;
+  border-radius: 10px;
+}
