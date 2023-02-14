@@ -74,6 +74,15 @@
 .nav-icon {
   @apply text-2xl text-white cursor-pointer;
 }
+.footer-text {
+  @apply text-sm lg:text-xl text-start lg:text-center font-medium text-orange-600 capitalize;
+}
+.footer-link {
+  @apply text-start hover:translate-x-1 hover:opacity-80 transition-all duration-300 text-base lg:text-lg text-black font-medium capitalize;
+}
+.footer-head {
+  @apply flex w-full md:w-[30%] lg:w-[30%] flex-col space-y-2 h-full md:h-[400px] lg:h-[400px] rounded-xl shadow-xl p-4 bg-orange-100;
+}
 ::-webkit-scrollbar {
   width: 5px;
   height: 0px;

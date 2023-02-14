@@ -31,7 +31,7 @@ export default function Header() {
               </Link>
             </li>
           </ul>
-          <div className=" lg:flex lg:items-center  lg:static  lg:py-2 px-4 hover:opacity-80 transition-all duration-300 bg-orange-700 text-white font-semibold lg:mr-12 ">
+          <div className=" lg:flex lg:items-center  lg:static  lg:py-2 px-4 hover:opacity-80 transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl  bg-orange-700 text-white font-semibold lg:mr-12 ">
             <Link href="/account/register" className="text-lg">
               Get Started
             </Link>
