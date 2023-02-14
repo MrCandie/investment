@@ -83,6 +83,21 @@
 .footer-head {
   @apply flex w-full md:w-[30%] lg:w-[30%] flex-col space-y-2 h-full md:h-[400px] lg:h-[400px] rounded-xl shadow-xl p-4 bg-orange-100;
 }
+.error {
+  @apply text-red-800 font-bold text-lg lg:text-2xl md:text-xl text-start uppercase;
+}
+.success {
+  @apply text-green-900 font-bold text-lg lg:text-2xl md:text-xl text-start uppercase;
+}
+.error-text {
+  @apply text-red-600 text-base text-center capitalize font-medium;
+}
+.success-text {
+  @apply text-green-700 text-base text-center capitalize font-medium;
+}
+button:disabled {
+  background: #ccc;
+}
 ::-webkit-scrollbar {
   width: 5px;
   height: 0px;
