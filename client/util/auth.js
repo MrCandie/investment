@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const APIURLUSER = "http://localhost:8000/api/v1/users";
+const APIURLUSERDOMAIN = "https://invest-back.onrender.com/api/v1/users";
 
 export async function signup(data) {
   const response = await axios.post(APIURLUSER + "/register", data);

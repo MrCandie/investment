@@ -36,6 +36,10 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("hello");
+});
+
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/wallets", walletRouter);
 app.use("/api/v1/dashboards", dashboardRouter);
