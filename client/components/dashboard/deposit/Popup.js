@@ -7,7 +7,20 @@ export default function Popup({
   address,
   setShow,
   show,
+  confirmDeposit,
 }) {
+  function depositHandler() {
+    if (plan === "starter") {
+      console.log("correct");
+      confirmDeposit("starter");
+    } else if (plan === "basic") {
+      confirmDeposit("basic");
+    } else if (plan === "silver") {
+      confirmDeposit("silver");
+    } else if (plan === "golden") {
+      confirmDeposit("golden");
+    }
+  }
   return (
     <Fragment>
       <div className="overlay"></div>
@@ -51,7 +64,9 @@ export default function Popup({
           <button onClick={() => setShow(false)} className="button">
             cancel
           </button>
-          <button className="button">confirm</button>
+          <button onClick={depositHandler} className="button">
+            confirm
+          </button>
         </div>
       </div>
     </Fragment>

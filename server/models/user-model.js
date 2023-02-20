@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const ShortUniqueId = require("short-unique-id");
+
+const refId = new ShortUniqueId({ length: 10 });
+const profileId = new ShortUniqueId({ length: 20 });
 
 const userSchema = new mongoose.Schema(
   {
@@ -36,6 +40,14 @@ const userSchema = new mongoose.Schema(
         },
         message: "passwords do not match",
       },
+    },
+    referralCode: {
+      type: String,
+      default: refId(),
+    },
+    profileId: {
+      type: String,
+      default: profileId(),
     },
     passwordChangedAt: Date,
     passwordResetToken: String,

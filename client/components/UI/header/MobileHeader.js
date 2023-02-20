@@ -1,10 +1,12 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import Link from "next/link";
 
 import { AiOutlineMenu } from "react-icons/ai";
 import { MdOutlineClose } from "react-icons/md";
+import { AppContext } from "../../../util/context";
 
 export default function MobileHeader({ setShow }) {
+  const ctx = useContext(AppContext);
   return (
     <Fragment>
       <div onClick={() => setShow(false)} className="overlay"></div>
@@ -27,10 +29,10 @@ export default function MobileHeader({ setShow }) {
           </li>
         </ul>
         <Link
-          href="/account/register"
+          href={ctx.isLoggedIn ? "/dashboard" : "/account/register"}
           className="py-4 px-4 hover:opacity-80 absolute left-10 top-80 transition-all duration-300 bg-orange-700 rounded-lg shadow-lg hover:shadow-xl  text-white font-semibold "
         >
-          Get Started
+          {ctx.isLoggedIn ? "Dashboard" : "Get Started"}
         </Link>
       </nav>
     </Fragment>

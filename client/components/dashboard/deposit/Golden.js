@@ -1,8 +1,59 @@
 import React, { Fragment, useState } from "react";
+import Notification from "../../UI/notification/Notification";
 import Popup from "./Popup";
 
-export default function Golden() {
-  const [show, setShow] = useState(false);
+export default function Golden({
+  show,
+  setShow,
+  modal,
+  setModal,
+  loading,
+  confirmDeposit,
+}) {
+  // const [show, setShow] = useState(false);
+
+  const [notification, setNotification] = useState({
+    text: "",
+    title: "",
+    status: "",
+  });
+
+  const [amount, setAmount] = useState("");
+  const [asset, setAsset] = useState("");
+
+  function openConfirmHandler(e) {
+    e.preventDefault();
+    if (!amount || !asset) {
+      setNotification({
+        title: "error",
+        text: "please fill in necessary fields",
+        status: "error",
+      });
+      setModal(true);
+      return;
+    }
+    if (Number(amount) < 100000) {
+      setNotification({
+        title: "error",
+        text: "amount for golden plan cannot be less then $100000",
+        status: "error",
+      });
+      setModal(true);
+      return;
+    }
+    setShow(true);
+  }
+
+  async function goldenDepositHandler() {
+    const data = {
+      amount,
+      asset,
+      plan: "golden",
+      status: "pending",
+    };
+    return await confirmDeposit(data);
+  }
+
   return (
     <Fragment>
       <div className="p-4 flex flex-col space-y-6">
@@ -17,19 +68,25 @@ export default function Golden() {
             <h4 className="h4">35%</h4>
           </div>
         </div>
-        <form className="flex flex-col space-y-6">
+        <form onSubmit={openConfirmHandler} className="flex flex-col space-y-6">
           <div className="flex flex-col space-y-2">
             <label className="label">enter amount</label>
             <input
+              onChange={(e) => setAmount(e.target.value)}
+              value={amount}
               className="input"
               type="number"
               min="100000"
-              placeholder="$31,000 - $100,000"
+              placeholder="$100,000 - above"
             />
           </div>
           <div className="flex flex-col space-y-2">
             <label className="label">select assets to deposit</label>
-            <select className="select">
+            <select
+              onChange={(e) => setAsset(e.target.value)}
+              value={asset}
+              className="select"
+            >
               <option className="capitalize" value="">
                 select an asset
               </option>
@@ -50,23 +107,26 @@ export default function Golden() {
               </option>
             </select>
           </div>
-          <button
-            type="button"
-            onClick={() => setShow(true)}
-            className="button"
-          >
-            Proceed to deposit
-          </button>
+          <button className="button">Proceed to deposit</button>
         </form>
       </div>
       {show && (
         <Popup
+          confirmDeposit={goldenDepositHandler}
           show={show}
           setShow={setShow}
           plan={"golden"}
           percentage="50%"
           amount={100}
           address={"n1nRfQvRxDFZ9m8PFeWdsnsDGptHKBSHsk"}
+        />
+      )}
+      {modal && (
+        <Notification
+          setShow={setModal}
+          title={notification.title}
+          text={notification.text}
+          status={notification.status}
         />
       )}
     </Fragment>

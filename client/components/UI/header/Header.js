@@ -1,12 +1,16 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import Link from "next/link";
 import MobileHeader from "./MobileHeader";
 
 import { AiOutlineMenu } from "react-icons/ai";
 import { MdOutlineClose } from "react-icons/md";
+import { AppContext } from "../../../util/context";
 
 export default function Header() {
   const [show, setShow] = useState(false);
+
+  const ctx = useContext(AppContext);
+
   return (
     <Fragment>
       <header className="hidden lg:block w-[80%] md:w-1/2 h-[100vh]   lg:w-full lg:h-full bg-orange-200">
@@ -32,8 +36,11 @@ export default function Header() {
             </li>
           </ul>
           <div className=" lg:flex lg:items-center  lg:static  lg:py-2 px-4 hover:opacity-80 transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl  bg-orange-700 text-white font-semibold lg:mr-12 ">
-            <Link href="/account/register" className="text-lg">
-              Get Started
+            <Link
+              href={ctx.isLoggedIn ? "/dashboard" : "/account/register"}
+              className="text-lg"
+            >
+              {ctx.isLoggedIn ? "Dashboard" : "Get Started"}
             </Link>
           </div>
         </div>

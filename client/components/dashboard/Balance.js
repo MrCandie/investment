@@ -9,7 +9,13 @@ import { Pagination } from "swiper";
 import { MdCallReceived } from "react-icons/md";
 import { TbSend } from "react-icons/tb";
 
-export default function Balance({ setShow }) {
+export default function Balance({
+  setShow,
+  dashboard,
+  balance,
+  allWithdraw,
+  totalDeposit,
+}) {
   return (
     <Swiper
       spaceBetween={10}
@@ -23,7 +29,7 @@ export default function Balance({ setShow }) {
             Balance
           </h1>
           <p className="text-2xl text-white font-semi-bold text-center">
-            $1,000
+            ${balance}
           </p>
           <div className="flex items-center justify-around w-full">
             <Link href="/dashboard/deposit" className="action-btn">
@@ -41,7 +47,7 @@ export default function Balance({ setShow }) {
             Total deposits
           </h1>
           <p className="text-2xl text-white font-semi-bold text-center">
-            $1,000
+            ${totalDeposit}
           </p>
         </div>
       </SwiperSlide>
@@ -51,7 +57,7 @@ export default function Balance({ setShow }) {
             Total withdrawals
           </h1>
           <p className="text-2xl text-white font-semi-bold text-center">
-            $1,000
+            ${allWithdraw}
           </p>
         </div>
       </SwiperSlide>
@@ -61,7 +67,7 @@ export default function Balance({ setShow }) {
             profits
           </h1>
           <p className="text-2xl text-white font-semi-bold text-center">
-            $1,000
+            ${dashboard.profit}
           </p>
         </div>
       </SwiperSlide>
@@ -71,7 +77,7 @@ export default function Balance({ setShow }) {
             referral bonus
           </h1>
           <p className="text-2xl text-white font-semi-bold text-center">
-            $1,000
+            ${dashboard.referralBonus}
           </p>
         </div>
       </SwiperSlide>

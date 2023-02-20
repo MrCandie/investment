@@ -1,9 +1,10 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { signup } from "../../util/auth";
+import { createDashboard, signup } from "../../util/auth";
 import Notification from "../UI/notification/Notification";
 import Spinner from "../UI/spinner/Spinner";
+import { AppContext } from "../../util/context";
 
 export default function Register() {
   const router = useRouter();
@@ -13,6 +14,8 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  const authCtx = useContext(AppContext);
 
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -31,34 +34,36 @@ export default function Register() {
       password,
       passwordConfirm,
     };
-    console.log(data);
+
     try {
       setLoading(true);
       const response = await signup(data);
-
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("id", response.data.user._id);
+      const userId = localStorage.getItem("id");
+      const dashboard = await createDashboard(userId, {}, response.token);
+     
+      authCtx.login(response.token, response.data.user);
       setLoading(false);
       setNotification({
         title: "success",
         text: "sign up successful",
         status: "success",
       });
+
       setShow(true);
       setTimeout(() => setShow(false), 1000);
+      router.replace("/start");
     } catch (err) {
       console.log(err);
       setLoading(false);
       setNotification({
         title: "sign up error",
-        // text:
-        //   err.response.data.error.statusCode === 500
-        //     ? "Response timeout...Try again"
-        //     : err.response.data.message,
         text: err.response.data.message,
         status: "error",
       });
       setShow(true);
     }
-    // router.push("/start");
   }
   return (
     <Fragment>

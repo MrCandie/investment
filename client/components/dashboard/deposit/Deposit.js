@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+
+import Notification from "../../UI/notification/Notification";
+import { createDeposit } from "../../../util/auth";
 import Basic from "./Basic";
 import Golden from "./Golden";
 import Silver from "./Silver";
@@ -6,17 +9,83 @@ import Starter from "./Starter";
 
 export default function Deposit() {
   const [plan, setPlan] = useState("starter");
+  const [show, setShow] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const [notification, setNotification] = useState({
+    text: "",
+    title: "",
+    status: "",
+  });
+
+  async function planDepositHandler(data) {
+    try {
+      setLoading(true);
+      const id = localStorage.getItem("id");
+      const token = localStorage.getItem("token");
+      const response = await createDeposit(id, token, data);
+      console.log(response);
+      setLoading(false);
+      setShow(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      setNotification({
+        title: "error",
+        text: err.response.data.message,
+        status: "error",
+      });
+      setModal(true);
+    }
+  }
 
   let screen;
 
   if (plan === "starter") {
-    screen = <Starter />;
+    screen = (
+      <Starter
+        confirmDeposit={planDepositHandler}
+        show={show}
+        setShow={setShow}
+        modal={modal}
+        setModal={setModal}
+        loading={loading}
+      />
+    );
   } else if (plan === "basic") {
-    screen = <Basic />;
+    screen = (
+      <Basic
+        confirmDeposit={planDepositHandler}
+        show={show}
+        setShow={setShow}
+        modal={modal}
+        setModal={setModal}
+        loading={loading}
+      />
+    );
   } else if (plan === "silver") {
-    screen = <Silver />;
+    screen = (
+      <Silver
+        confirmDeposit={planDepositHandler}
+        show={show}
+        setShow={setShow}
+        modal={modal}
+        setModal={setModal}
+        loading={loading}
+      />
+    );
   } else if (plan === "golden") {
-    screen = <Golden />;
+    screen = (
+      <Golden
+        confirmDeposit={planDepositHandler}
+        show={show}
+        setShow={setShow}
+        modal={modal}
+        setModal={setModal}
+        loading={loading}
+      />
+    );
   }
 
   return (

@@ -1,8 +1,60 @@
 import React, { Fragment, useState } from "react";
+import { createDeposit } from "../../../util/auth";
+import Notification from "../../UI/notification/Notification";
 import Popup from "./Popup";
 
-export default function Starter() {
-  const [show, setShow] = useState(false);
+export default function Starter({
+  show,
+  setShow,
+  modal,
+  setModal,
+  loading,
+  confirmDeposit,
+}) {
+  // const [show, setShow] = useState(false);
+  // const [modal, setModal] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState({
+    text: "",
+    title: "",
+    status: "",
+  });
+
+  const [amount, setAmount] = useState("");
+  const [asset, setAsset] = useState("");
+
+  function openConfirmHandler(e) {
+    e.preventDefault();
+    if (!amount || !asset) {
+      setNotification({
+        title: "error",
+        text: "please fill in necessary fields",
+        status: "error",
+      });
+      setModal(true);
+      return;
+    }
+    if (Number(amount) < 100 || Number(amount) > 6000) {
+      setNotification({
+        title: "error",
+        text: "amount for starter plan cannot be less then $100 or more than $6000",
+        status: "error",
+      });
+      setModal(true);
+      return;
+    }
+    setShow(true);
+  }
+
+  async function starterDepositHandler() {
+    const data = {
+      amount,
+      asset,
+      plan: "starter",
+      status: "pending",
+    };
+    return await confirmDeposit(data);
+  }
 
   return (
     <Fragment>
@@ -18,10 +70,12 @@ export default function Starter() {
             <h4 className="h4">20%</h4>
           </div>
         </div>
-        <form className="flex flex-col space-y-6">
+        <form onSubmit={openConfirmHandler} className="flex flex-col space-y-6">
           <div className="flex flex-col space-y-2">
             <label className="label">enter amount</label>
             <input
+              onChange={(e) => setAmount(e.target.value)}
+              value={amount}
               className="input"
               type="number"
               max="6000"
@@ -31,7 +85,11 @@ export default function Starter() {
           </div>
           <div className="flex flex-col space-y-2">
             <label className="label">select assets to deposit</label>
-            <select className="select">
+            <select
+              onChange={(e) => setAsset(e.target.value)}
+              value={asset}
+              className="select"
+            >
               <option className="capitalize" value="">
                 select an asset
               </option>
@@ -52,23 +110,26 @@ export default function Starter() {
               </option>
             </select>
           </div>
-          <button
-            type="button"
-            onClick={() => setShow(true)}
-            className="button"
-          >
-            Proceed to deposit
-          </button>
+          <button className="button">Proceed to deposit</button>
         </form>
       </div>
       {show && (
         <Popup
+          confirmDeposit={starterDepositHandler}
           show={show}
           setShow={setShow}
           plan={"starter"}
           percentage="20%"
           amount={100}
           address={"n1nRfQvRxDFZ9m8PFeWdsnsDGptHKBSHsk"}
+        />
+      )}
+      {modal && (
+        <Notification
+          setShow={setModal}
+          title={notification.title}
+          text={notification.text}
+          status={notification.status}
         />
       )}
     </Fragment>

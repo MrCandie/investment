@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-export default function Start() {
+export default function Start({ setScreen }) {
   return (
     <div className="w-full h-[100vh] flex items-center justify-center md:p-4 bg-orange-100">
       <div className="w-[90%] md:w-[60%] lg:w-[40%] p-6 flex flex-col space-y-20 bg-orange-700 shadow-xl rounded-lg h-[700px]">
@@ -16,12 +16,12 @@ export default function Start() {
             create a passive income for yourself!
           </p>
         </div>
-        <Link
+        <button
+          onClick={() => setScreen("wallet")}
           className="p-4 bg-orange-500 text-center w-[60%] mx-auto capitalize flex items-center justify-center text-white font-semibold text-xl rounded-lg hover:shadow-xl shadow-lg transition-all duration-300"
-          href="/dashboard"
         >
           get started
-        </Link>
+        </button>
       </div>
     </div>
   );

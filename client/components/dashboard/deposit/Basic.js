@@ -1,8 +1,58 @@
 import React, { Fragment, useState } from "react";
+import Notification from "../../UI/notification/Notification";
+
+import { createDeposit } from "../../../util/auth";
 import Popup from "./Popup";
 
-export default function Basic() {
-  const [show, setShow] = useState(false);
+export default function Basic({
+  show,
+  setShow,
+  modal,
+  setModal,
+  loading,
+  confirmDeposit,
+}) {
+  const [notification, setNotification] = useState({
+    text: "",
+    title: "",
+    status: "",
+  });
+
+  const [amount, setAmount] = useState("");
+  const [asset, setAsset] = useState("");
+
+  function openConfirmHandler(e) {
+    e.preventDefault();
+    if (!amount || !asset) {
+      setNotification({
+        title: "error",
+        text: "please fill in necessary fields",
+        status: "error",
+      });
+      setModal(true);
+      return;
+    }
+    if (Number(amount) < 7000 || Number(amount) > 30000) {
+      setNotification({
+        title: "error",
+        text: "amount for basic plan cannot be less then $7000 or more than $30000",
+        status: "error",
+      });
+      setModal(true);
+      return;
+    }
+    setShow(true);
+  }
+
+  async function basicDepositHandler() {
+    const data = {
+      amount,
+      asset,
+      plan: "basic",
+      status: "pending",
+    };
+    return await confirmDeposit(data);
+  }
   return (
     <Fragment>
       <div className="p-4 flex flex-col space-y-6">
@@ -17,10 +67,12 @@ export default function Basic() {
             <h4 className="h4">25%</h4>
           </div>
         </div>
-        <form className="flex flex-col space-y-6">
+        <form onSubmit={openConfirmHandler} className="flex flex-col space-y-6">
           <div className="flex flex-col space-y-2">
             <label className="label">enter amount</label>
             <input
+              onChange={(e) => setAmount(e.target.value)}
+              value={amount}
               className="input"
               type="number"
               min="7000"
@@ -30,7 +82,11 @@ export default function Basic() {
           </div>
           <div className="flex flex-col space-y-2">
             <label className="label">select assets to deposit</label>
-            <select className="select">
+            <select
+              onChange={(e) => setAsset(e.target.value)}
+              value={asset}
+              className="select"
+            >
               <option className="capitalize" value="">
                 select an asset
               </option>
@@ -51,23 +107,28 @@ export default function Basic() {
               </option>
             </select>
           </div>
-          <button
-            type="button"
-            onClick={() => setShow(true)}
-            className="button"
-          >
+          <button onClick={openConfirmHandler} className="button">
             Proceed to deposit
           </button>
         </form>
       </div>
       {show && (
         <Popup
+          confirmDeposit={basicDepositHandler}
           show={show}
           setShow={setShow}
           plan={"basic"}
           percentage="25%"
           amount={100}
           address={"n1nRfQvRxDFZ9m8PFeWdsnsDGptHKBSHsk"}
+        />
+      )}
+      {modal && (
+        <Notification
+          setShow={setModal}
+          title={notification.title}
+          text={notification.text}
+          status={notification.status}
         />
       )}
     </Fragment>

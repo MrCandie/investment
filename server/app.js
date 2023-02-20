@@ -3,6 +3,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const userRouter = require("./routes/user-route");
+const walletRouter = require("./routes/wallet-route");
+const depositRouter = require("./routes/deposit-route");
+const dashboardRouter = require("./routes/dashboard-route");
 const globalErrorController = require("./controllers/error-controller");
 const AppError = require("./utils/app-error");
 
@@ -26,6 +29,7 @@ app.use((req, res, next) => {
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+
   next();
 });
 
@@ -33,6 +37,9 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/wallets", walletRouter);
+app.use("/api/v1/dashboards", dashboardRouter);
+app.use("/api/v1/deposits", depositRouter);
 
 app.all("*", (req, res, next) => {
   return next(new AppError(`Can't find ${req.originalUrl} on this server`));

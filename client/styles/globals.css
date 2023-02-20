@@ -109,7 +109,13 @@ button:disabled {
   @apply flex w-[25%] bg-orange-700 flex-col items-center p-3 space-y-2;
 }
 .bg {
-  @apply h-[90vh] lg:h-full flex items-center justify-center bg-orange-200;
+  @apply h-[90vh]  flex items-center justify-center bg-orange-200;
+}
+.deposit {
+  @apply text-white bg-green-600 py-1 px-2 rounded-xl shadow-xl text-base;
+}
+.withdraw {
+  @apply text-white bg-red-600 py-1 px-2 rounded-xl shadow-xl text-base;
 }
 
 /* Track */

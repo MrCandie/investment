@@ -1,12 +1,19 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import Link from "next/link";
 import { login } from "../../util/auth";
 import Spinner from "../UI/spinner/Spinner";
 import Notification from "../UI/notification/Notification";
+import { AppContext } from "../../util/context";
+import { useRouter } from "next/router";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const router = useRouter();
+
+  const authContext = useContext(AppContext);
+  console.log(authContext.isLoggedIn);
 
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -26,6 +33,11 @@ export default function Login() {
     try {
       setLoading(true);
       const response = await login(data);
+
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("id", response.data.user._id);
+      authContext.login(response.token, response.data.user);
+      router.replace("/dashboard");
       setLoading(false);
       setNotification({
         title: "success",
@@ -33,15 +45,12 @@ export default function Login() {
         status: "success",
       });
       setShow(true);
-      setTimeout(() => setShow(false), 500);
+      setTimeout(() => setShow(false), 1000);
     } catch (err) {
       setLoading(false);
       setNotification({
         title: "login error",
-        text:
-          err.response.data.error.statusCode === 500
-            ? "Response timeout...Try again"
-            : err.response.data.message,
+        text: err.response.data.message,
         status: "error",
       });
       setShow(true);

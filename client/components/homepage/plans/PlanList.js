@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
+import { AppContext } from "../../../util/context";
 
 const plan = [
   {
@@ -37,6 +38,7 @@ const plan = [
 ];
 
 export default function PlanList() {
+  const ctx = useContext(AppContext);
   return (
     <div className="w-full p-4 md:p-4 lg:p-10">
       <ul className="w-full flex items-center justify-center flex-wrap">
@@ -70,7 +72,10 @@ export default function PlanList() {
               </div>
             </div>
             <div className="action p-6 bg-orange-100">
-              <Link href="/dashboard" className="button">
+              <Link
+                href={ctx.isLoggedIn ? "/dashboard" : "/account/login"}
+                className="button"
+              >
                 invest now
               </Link>
             </div>
