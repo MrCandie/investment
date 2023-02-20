@@ -15,9 +15,9 @@ export default function Header() {
     <Fragment>
       <header className="hidden lg:block w-[80%] md:w-1/2 h-[100vh]   lg:w-full lg:h-full bg-orange-200">
         <div className="w-full lg:flex-row lg:space-x-6   p-4 lg:flex   bg-opacity-40 lg:bg-opacity-100  items-center justify-center  lg:justify-between shadow-md z-10">
-          <div className="absolute top-20 lg:static">
-            <h1>LOGO</h1>
-          </div>
+          <Link href="/" className="absolute top-20 lg:static">
+            <img src="/logo.png" alt="logo" className="w-[50px] rounded-full" />
+          </Link>
           <ul className="flex flex-col  lg:flex-row lg:space-x-6 lg:space-y-0 items-center justify-center ">
             <li className="nav-item">
               <Link className="nav-link" href="/">
@@ -45,11 +45,11 @@ export default function Header() {
           </div>
         </div>
       </header>
-      <div className="lg:hidden bg-orange-200 p-4">
+      <div className="lg:hidden bg-orange-200 p-2">
         <div className="lg:hidden flex items-center justify-between">
-          <div className="">
-            <h1>LOGO</h1>
-          </div>
+          <Link href="/" className="">
+            <img src="/logo.png" alt="logo" className="w-[50px] rounded-full" />
+          </Link>
           <span
             onClick={() => (show ? setShow(false) : setShow(true))}
             className="text-xl cursor-pointer z-50 text-black font-bold"

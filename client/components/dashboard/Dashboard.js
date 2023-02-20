@@ -10,7 +10,7 @@ export default function Dashboard({
   deposits,
   balance,
   totalDeposit,
-  allWithdraw
+  allWithdraw,
 }) {
   const [show, setShow] = useState(false);
   return (
@@ -28,7 +28,9 @@ export default function Dashboard({
           <History deposits={deposits} />
         </div>
       </div>
-      {show && <Withdraw dashboard={dashboard} setShow={setShow} />}
+      {show && (
+        <Withdraw balance={balance} dashboard={dashboard} setShow={setShow} />
+      )}
       <Navigation />
     </Fragment>
   );

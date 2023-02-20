@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { createWithdraw } from "../../util/auth";
 
-export default function Withdraw({ setShow, dashboard }) {
+export default function Withdraw({ setShow, dashboard, balance }) {
   const [asset, setAsset] = useState("");
   const [address, setAddress] = useState("");
   const [amount, setAmount] = useState("");
@@ -15,8 +15,8 @@ export default function Withdraw({ setShow, dashboard }) {
     const id = localStorage.getItem("id");
     const token = localStorage.getItem("token");
 
-    if (Number(amount) > +dashboard.balance) {
-      alert(`Withdrawal amount can't be more than ${dashboard.balance}`);
+    if (Number(amount) > +balance) {
+      alert(`Withdrawal amount can't be more than ${balance}`);
       return;
     }
     const data = {
@@ -52,7 +52,7 @@ export default function Withdraw({ setShow, dashboard }) {
             <input
               onChange={(e) => setAmount(e.target.value)}
               value={amount}
-              max={dashboard.balance}
+              max={balance}
               type="number"
               placeholder="Enter withdrawal amount"
               className="input"
