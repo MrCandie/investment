@@ -1,10 +1,11 @@
 import React, { Fragment, useContext, useState } from "react";
-import { updateUser } from "../../util/auth";
+import { updateUser, uploadProfilePicture } from "../../util/auth";
 import { AppContext } from "../../util/context";
 import Notification from "../UI/notification/Notification";
 
 export default function EditProfile({ setShow }) {
   const [name, setName] = useState("");
+  const [image, setImage] = useState("");
 
   const ctx = useContext(AppContext);
 
@@ -22,8 +23,10 @@ export default function EditProfile({ setShow }) {
     const id = localStorage.getItem("id");
     const data = {
       name,
+      image: `/images/${image.name}`,
     };
-    if (!name) {
+
+    if (!name || !image) {
       setMessage({
         title: "Error",
         text: "please fill necessary fields correctly",
@@ -34,8 +37,9 @@ export default function EditProfile({ setShow }) {
     }
     try {
       setLoading(true);
+
+      const picture = await uploadProfilePicture({ image }, token);
       const response = await updateUser(ctx.user.id || id, data, token);
-      console.log(response);
       setLoading(false);
       setShow(false);
       alert("profile updated");
@@ -71,7 +75,11 @@ export default function EditProfile({ setShow }) {
           </div>
           <div className="input-container">
             <label className="label-white-bg text-black">profile picture</label>
-            <input type="file" />
+            <input
+              onChange={(e) => setImage(e.target.files[0])}
+              name="image"
+              type="file"
+            />
           </div>
           <div className="action">
             <button

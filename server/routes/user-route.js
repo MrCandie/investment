@@ -15,6 +15,7 @@ router.use("/:id/withdraw", withdrawRouter);
 
 router.post("/register", authController.signup);
 router.post("/login", authController.login);
+router.post("/upload", authController.protect, userController.uploadImage);
 
 router.patch(
   "/updatePassword/:id",

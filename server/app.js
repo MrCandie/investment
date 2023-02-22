@@ -1,6 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const fileUpload = require("express-fileupload");
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 const userRouter = require("./routes/user-route");
 const walletRouter = require("./routes/wallet-route");
@@ -35,6 +42,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 app.use(express.json());
+app.use(fileUpload({ useTempFiles: true }));
 
 app.get("/", (req, res) => {
   res.send("hello");

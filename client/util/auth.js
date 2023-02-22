@@ -34,6 +34,15 @@ export async function updateUser(id, data, token) {
   });
   return response.data;
 }
+export async function uploadProfilePicture(data, token) {
+  const response = await axios.post(APIURLUSER + "/upload", data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
+}
 export async function getUser(id, token) {
   const response = await axios.get(APIURLUSER + `/${id}`, {
     headers: {

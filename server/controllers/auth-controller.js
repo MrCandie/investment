@@ -1,4 +1,6 @@
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
 
 const User = require("./../models/user-model");
 const catchAsync = require("./../utils/catch-async");
@@ -44,6 +46,19 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
   });
+
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+  const msg = {
+    to: "akinwumiadekanmi2@gmail.com", // Change to your recipient
+    from: "mrcandie8@gmail.com", // Change to your verified sender
+    subject: "Welcome to Maeve",
+    text: "Sign up was successful",
+    // html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+  };
+
+  const response = await sgMail.send(msg);
+  console.log(response);
 
   createSendToken(newUser, 201, res);
 });
