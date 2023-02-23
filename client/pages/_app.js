@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }) {
         <link rel="icon" href="/logo.png" />
       </Head>
       <AppProvider>
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
       </AppProvider>
     </>
   );

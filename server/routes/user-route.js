@@ -16,6 +16,8 @@ router.use("/:id/withdraw", withdrawRouter);
 router.post("/register", authController.signup);
 router.post("/login", authController.login);
 router.post("/verify-email", authController.verifyEmail);
+router.post("/forgot-password", authController.forgotPassword);
+router.patch("/reset-password/:token", authController.resetPassword);
 router.post(
   "/send-verify-request",
   authController.protect,

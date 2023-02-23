@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const APIURLUSER = "http://localhost:8000/api/v1/users";
-// const APIURLUSERDOMAIN = "https://invest-back.onrender.com/api/v1/users";
+// const APIURLUSER = "http://localhost:8000/api/v1/users";
+const APIURLUSER = "https://maeve.onrender.com/api/v1/users";
 
 export async function signup(data) {
   const response = await axios.post(APIURLUSER + "/register", data);
@@ -15,6 +15,19 @@ export async function login(data) {
 
 export async function verifyEmail(data) {
   const response = await axios.post(APIURLUSER + "/verify-email", data);
+  return response.data;
+}
+
+export async function forgotPassword(data) {
+  const response = await axios.post(APIURLUSER + "/forgot-password", data);
+  return response.data;
+}
+
+export async function resetPassword(data, token) {
+  const response = await axios.patch(
+    APIURLUSER + `/reset-password/${token}`,
+    data
+  );
   return response.data;
 }
 

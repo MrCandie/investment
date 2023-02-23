@@ -9,6 +9,7 @@ import {
 import Notification from "../../components/UI/notification/Notification";
 
 import { AppContext } from "../../util/context";
+import Spinner from "../../components/UI/spinner/Spinner";
 
 export default function Index() {
   const ctx = useContext(AppContext);
@@ -86,6 +87,9 @@ export default function Index() {
     }
     fetchData();
   }, [dashboard, transactions, balance, allDeposits, allWithdrawal]);
+  if (!dashboard) {
+    return <Spinner />;
+  }
 
   return (
     <Fragment>

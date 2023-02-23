@@ -25,6 +25,11 @@ const depositSchema = new mongoose.Schema(
       required: [true, "transaction must contain an asset"],
       trim: true,
     },
+    address: {
+      type: String,
+      required: [true, "transaction must have an address"],
+      trim: true,
+    },
     plan: {
       type: String,
       required: [true, "transaction must contain an plan"],

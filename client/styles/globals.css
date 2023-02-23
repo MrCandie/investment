@@ -11,6 +11,9 @@
 .input {
   @apply p-2 text-base text-black font-normal rounded-lg bg-white outline-none border-none focus:shadow-xl;
 }
+.input-custom {
+  @apply p-2 text-base text-black font-normal rounded-lg  outline-none border-none focus:shadow-xl;
+}
 .button {
   @apply py-3 px-4 bg-orange-800 text-white text-base font-semibold hover:opacity-80 transition-all duration-300 capitalize rounded-lg shadow-lg hover:shadow-xl;
 }

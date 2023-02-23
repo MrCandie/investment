@@ -1,9 +1,17 @@
-import React, { useContext } from "react";
+import { useRouter } from "next/router";
+import React, { useContext, useEffect } from "react";
 import Login from "../../components/auth/Login";
-import Dashboard from "../../components/dashboard/Dashboard";
 import { AppContext } from "../../util/context";
 
 export default function Logins() {
+  const router = useRouter();
   const ctx = useContext(AppContext);
-  return <>{ctx.isLoggedIn ? <Dashboard /> : <Login />}</>;
+
+  useEffect(() => {
+    if (ctx.isLoggedIn) {
+      router.replace("/dashboard");
+    }
+  }, []);
+
+  return <Login />;
 }

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
 import Notification from "../../UI/notification/Notification";
 import Popup from "./Popup";
@@ -19,6 +19,19 @@ export default function Silver({
 
   const [amount, setAmount] = useState("");
   const [asset, setAsset] = useState("");
+
+  const [address, setAddress] = useState("");
+  useEffect(() => {
+    if (asset === "bitcoin") {
+      setAddress("n1nRfQvRxDFZ9m8PFeWdsnsDGptHKBSHsk");
+    } else if (asset === "ethereum") {
+      setAddress("0x097DF0544E7D3C741EF9C01282323D9443E85644");
+    } else if (asset === "litecoin") {
+      setAddress("mwrJkJQxQT9GCKY3wvw6DqkhLEr9YrVeJi");
+    } else if (asset === "USDT") {
+      setAddress("0x097DF0544E7D3C741EF9C01282323D9443E85644");
+    }
+  }, [asset]);
 
   function openConfirmHandler(e) {
     e.preventDefault();
@@ -46,6 +59,7 @@ export default function Silver({
   async function silverDepositHandler() {
     const data = {
       amount,
+      address,
       asset,
       plan: "silver",
       status: "pending",
@@ -118,7 +132,7 @@ export default function Silver({
           plan={"silver"}
           percentage="35%"
           amount={100}
-          address={"n1nRfQvRxDFZ9m8PFeWdsnsDGptHKBSHsk"}
+          address={address}
         />
       )}
       {modal && (

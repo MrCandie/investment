@@ -7,6 +7,7 @@ import Spinner from "../UI/spinner/Spinner";
 import Notification from "../UI/notification/Notification";
 import { AppContext } from "../../util/context";
 import { useRouter } from "next/router";
+import ForgotPassword from "./ForgotPassword";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -18,6 +19,7 @@ export default function Login() {
 
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
+  const [passwordModal, setPasswordModal] = useState(false);
   const [notification, setNotification] = useState({
     text: "",
     title: "",
@@ -50,6 +52,7 @@ export default function Login() {
       setTimeout(() => setShow(false), 1000);
     } catch (err) {
       setLoading(false);
+      localStorage.removeItem("token");
       setNotification({
         title: "login error",
         text: err.response.data.message,
@@ -80,7 +83,10 @@ export default function Login() {
               type="password"
               placeholder="Password"
             />
-            <p className="m-0 text-white text-lg capitalize font-normal cursor-pointer">
+            <p
+              onClick={() => setPasswordModal(true)}
+              className="m-0 text-white text-lg capitalize font-normal cursor-pointer"
+            >
               forgot password?
             </p>
             <button disabled={loading} className="button">
@@ -104,6 +110,7 @@ export default function Login() {
         />
       )}
       {loading && <Spinner />}
+      {passwordModal && <ForgotPassword setPasswordModal={setPasswordModal} />}
     </Fragment>
   );
 }

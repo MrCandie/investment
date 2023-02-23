@@ -68,7 +68,7 @@ export default function Balance({
             profits
           </h1>
           <p className="text-2xl text-white font-semi-bold text-center">
-            ${dashboard.profit}
+            ${dashboard.profit ? dashboard.profit : 0}
           </p>
         </div>
       </SwiperSlide>
@@ -78,7 +78,7 @@ export default function Balance({
             referral bonus
           </h1>
           <p className="text-2xl text-white font-semi-bold text-center">
-            ${dashboard.referralBonus}
+            ${dashboard.referralBonus ? dashboard.balance : 0}
           </p>
           <div className="flex items-center justify-around w-full">
             <span className="action-btn">

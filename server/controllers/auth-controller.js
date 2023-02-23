@@ -3,6 +3,7 @@ const nodemailer = require("nodemailer");
 const sgMail = require("@sendgrid/mail");
 const crypto = require("crypto");
 const sendEmailVerification = require("./../utils/sendEmailVerification");
+const sendPasswordVerification = require("./../utils/sendPasswordVerification");
 
 const User = require("./../models/user-model");
 const catchAsync = require("./../utils/catch-async");
@@ -174,6 +175,60 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   user.password = password;
   user.passwordConfirm = passwordConfirm;
+
+  await user.save();
+
+  createSendToken(user, 200, res);
+});
+
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  const { email } = req.body;
+  if (!email) {
+    return next(new AppError("Please enter your email address", 400));
+  }
+  const user = await User.findOne({ email: email }).select("+password");
+
+  if (!user) {
+    return next(new AppError("invalid email address", 400));
+  }
+
+  const token = user.createPasswordResetToken();
+  await user.save({ validateBeforeSave: false });
+
+  const origin = "http://localhost:3000/";
+
+  await sendPasswordVerification({
+    name: user.name,
+    email: user.email,
+    resetToken: token,
+    origin,
+  });
+  res.status(200).json({
+    status: "success",
+    message: "password reset email sent",
+  });
+});
+
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  const { token } = req.params;
+
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+  const { password, passwordConfirm } = req.body;
+
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() },
+  }).select("+password");
+
+  if (!user) {
+    return next(new AppError("token is invalid or expired", 400));
+  }
+
+  user.password = password;
+  user.passwordConfirm = passwordConfirm;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
 
   await user.save();
 

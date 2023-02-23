@@ -24,6 +24,11 @@ const withdrawSchema = new mongoose.Schema({
     required: [true, "transaction must contain an asset"],
     trim: true,
   },
+  address: {
+    type: String,
+    required: [true, "transaction must have an address"],
+    trim: true,
+  },
   plan: {
     type: String,
     required: [true, "transaction must contain an plan"],
@@ -37,7 +42,7 @@ const withdrawSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["pending", "success", "failed", "nil"],
-    default: "nil",
+    default: "pending",
     trim: true,
   },
   transactionID: {

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Notification from "../../UI/notification/Notification";
 
 import { createDeposit } from "../../../util/auth";
@@ -18,8 +18,22 @@ export default function Basic({
     status: "",
   });
 
+  const [address, setAddress] = useState("");
+
   const [amount, setAmount] = useState("");
   const [asset, setAsset] = useState("");
+
+  useEffect(() => {
+    if (asset === "bitcoin") {
+      setAddress("n1nRfQvRxDFZ9m8PFeWdsnsDGptHKBSHsk");
+    } else if (asset === "ethereum") {
+      setAddress("0x097DF0544E7D3C741EF9C01282323D9443E85644");
+    } else if (asset === "litecoin") {
+      setAddress("mwrJkJQxQT9GCKY3wvw6DqkhLEr9YrVeJi");
+    } else if (asset === "USDT") {
+      setAddress("0x097DF0544E7D3C741EF9C01282323D9443E85644");
+    }
+  }, [asset]);
 
   function openConfirmHandler(e) {
     e.preventDefault();
@@ -48,6 +62,7 @@ export default function Basic({
     const data = {
       amount,
       asset,
+      address,
       plan: "basic",
       status: "pending",
     };
@@ -120,7 +135,7 @@ export default function Basic({
           plan={"basic"}
           percentage="25%"
           amount={100}
-          address={"n1nRfQvRxDFZ9m8PFeWdsnsDGptHKBSHsk"}
+          address={address}
         />
       )}
       {modal && (

@@ -35,7 +35,7 @@ export default function VerifyEmail() {
 
   return (
     <div className="w-full h-[100vh] flex items-center justify-center bg-orange-100">
-      <div className="bg-orange-400 w-[90%] lg:w-[40%] p-8 rounded-lg shadow-xl flex flex-col space-y-10">
+      <div className="bg-white w-[90%] lg:w-[40%] p-8 rounded-lg shadow-xl flex flex-col space-y-10">
         <h1 className="text">{message}</h1>
         <div className="action">
           <button onClick={loginHandler} className="button">

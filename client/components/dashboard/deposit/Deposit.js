@@ -6,12 +6,15 @@ import Basic from "./Basic";
 import Golden from "./Golden";
 import Silver from "./Silver";
 import Starter from "./Starter";
+import { useRouter } from "next/router";
 
 export default function Deposit() {
   const [plan, setPlan] = useState("starter");
   const [show, setShow] = useState(false);
   const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const [notification, setNotification] = useState({
     text: "",
@@ -28,6 +31,7 @@ export default function Deposit() {
       alert("deposit request sent");
       setLoading(false);
       setShow(false);
+      router.replace("/dashboard");
     } catch (err) {
       console.log(err);
       setLoading(false);

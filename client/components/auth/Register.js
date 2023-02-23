@@ -59,6 +59,7 @@ export default function Register() {
       router.replace("/start");
     } catch (err) {
       console.log(err);
+      localStorage.removeItem("token");
       setLoading(false);
       setNotification({
         title: "sign up error",
