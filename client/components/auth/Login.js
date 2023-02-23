@@ -1,5 +1,7 @@
 import React, { Fragment, useContext, useState } from "react";
 import Link from "next/link";
+import { setCookie } from "cookies-next";
+
 import { login } from "../../util/auth";
 import Spinner from "../UI/spinner/Spinner";
 import Notification from "../UI/notification/Notification";
@@ -13,7 +15,6 @@ export default function Login() {
   const router = useRouter();
 
   const authContext = useContext(AppContext);
-  console.log(authContext.isLoggedIn);
 
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -27,7 +28,7 @@ export default function Login() {
     e.preventDefault();
 
     const data = {
-      email,
+      email: email.toLowerCase(),
       password,
     };
     try {
@@ -36,6 +37,7 @@ export default function Login() {
 
       localStorage.setItem("token", response.token);
       localStorage.setItem("id", response.data.user._id);
+      setCookie("token", "Bearer " + response.token);
       authContext.login(response.token, response.data.user);
       router.replace("/dashboard");
       setLoading(false);

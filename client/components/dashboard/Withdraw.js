@@ -30,13 +30,14 @@ export default function Withdraw({ setShow, dashboard, balance }) {
     try {
       setLoading(true);
       const response = await createWithdraw(id, token, data);
-      console.log(response);
       setLoading(false);
       setShow(false);
       alert("withdrawal request successful");
     } catch (err) {
       setLoading(false);
       console.log(err);
+      alert(err.response.data.message || "Something went wrong");
+      setShow(false);
     }
   }
 

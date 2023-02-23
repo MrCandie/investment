@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 const ShortUniqueId = require("short-unique-id");
 
 const refId = new ShortUniqueId({ length: 10 });
@@ -41,6 +42,12 @@ const userSchema = new mongoose.Schema(
         message: "passwords do not match",
       },
     },
+    emailIsVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verified: Date,
+    verificationToken: String,
     referralCode: {
       type: String,
       default: refId(),
@@ -65,8 +72,9 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified) next();
-
-  this.password = await bcrypt.hash(this.password, 12);
+  // this.password = await bcrypt.hash(this.password, 12);
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
   this.passwordConfirm = undefined;
   next();
 });
@@ -95,6 +103,17 @@ userSchema.methods.passwordChangedAfter = function (jwtTime) {
     return jwtTime < passwordTimeStamp;
   }
   return false;
+};
+
+userSchema.methods.createVerifyEmailToken = function () {
+  const token = crypto.randomBytes(32).toString("hex");
+
+  this.verificationToken = crypto
+    .createHash("sha256")
+    .update(token)
+    .digest("hex");
+
+  return token;
 };
 
 const User = mongoose.model("User", userSchema);

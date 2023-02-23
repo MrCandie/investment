@@ -31,7 +31,7 @@ export default function Index() {
     }
     fetchData();
   }, [wallet]);
-  // console.log(wallet);
+
   return (
     <Fragment>
       {ctx.isLoggedIn ? (

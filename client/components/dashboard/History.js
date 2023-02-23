@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import Spinner from "../UI/spinner/Spinner";
 
 export default function History({ deposits }) {
   return (

@@ -15,6 +15,12 @@ router.use("/:id/withdraw", withdrawRouter);
 
 router.post("/register", authController.signup);
 router.post("/login", authController.login);
+router.post("/verify-email", authController.verifyEmail);
+router.post(
+  "/send-verify-request",
+  authController.protect,
+  authController.sendVerifyRequest
+);
 router.post("/upload", authController.protect, userController.uploadImage);
 
 router.patch(

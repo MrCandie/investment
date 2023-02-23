@@ -11,7 +11,6 @@ export default function Popup({
 }) {
   function depositHandler() {
     if (plan === "starter") {
-      console.log("correct");
       confirmDeposit("starter");
     } else if (plan === "basic") {
       confirmDeposit("basic");

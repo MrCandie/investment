@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const APIURLUSER = "http://localhost:8000/api/v1/users";
-const APIURLUSERDOMAIN = "https://invest-back.onrender.com/api/v1/users";
+// const APIURLUSERDOMAIN = "https://invest-back.onrender.com/api/v1/users";
 
 export async function signup(data) {
   const response = await axios.post(APIURLUSER + "/register", data);
@@ -10,6 +10,24 @@ export async function signup(data) {
 
 export async function login(data) {
   const response = await axios.post(APIURLUSER + "/login", data);
+  return response.data;
+}
+
+export async function verifyEmail(data) {
+  const response = await axios.post(APIURLUSER + "/verify-email", data);
+  return response.data;
+}
+
+export async function verifyRequest(token) {
+  const response = await axios.post(
+    APIURLUSER + "/send-verify-request",
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token} `,
+      },
+    }
+  );
   return response.data;
 }
 

@@ -11,6 +11,12 @@ exports.setUserId = catchAsync(async (req, res, next) => {
 exports.createWithdraw = catchAsync(async (req, res, next) => {
   const newWithdraw = await Withdraw.create(req.body);
 
+  if (!req.user.emailIsVerified) {
+    return next(
+      new AppError("Verify your email address to complete this action")
+    );
+  }
+
   res.status(201).json({
     status: "success",
     data: {

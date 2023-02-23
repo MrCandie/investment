@@ -25,7 +25,7 @@ export default function Deposit() {
       const id = localStorage.getItem("id");
       const token = localStorage.getItem("token");
       const response = await createDeposit(id, token, data);
-      console.log(response);
+      alert("deposit request sent");
       setLoading(false);
       setShow(false);
     } catch (err) {

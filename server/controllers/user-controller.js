@@ -62,15 +62,3 @@ exports.uploadImage = catchAsync(async (req, res, next) => {
     },
   });
 });
-
-// exports.uploadImage = catchAsync(async (req, res, next) => {
-//   console.log(req.files.image.tempFilePath);
-//   const result = await cloudinary.uploader.upload(
-//     req.files.image.tempFilePath,
-//     {
-//       use_filename: true,
-//       folder: "investment-profile-pictures",
-//     }
-//   );
-//   console.log(result);
-// });

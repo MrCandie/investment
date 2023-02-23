@@ -8,6 +8,7 @@ import { Pagination } from "swiper";
 
 import { MdCallReceived } from "react-icons/md";
 import { TbSend } from "react-icons/tb";
+import Spinner from "../UI/spinner/Spinner";
 
 export default function Balance({
   setShow,
@@ -79,6 +80,11 @@ export default function Balance({
           <p className="text-2xl text-white font-semi-bold text-center">
             ${dashboard.referralBonus}
           </p>
+          <div className="flex items-center justify-around w-full">
+            <span className="action-btn">
+              <TbSend />
+            </span>
+          </div>
         </div>
       </SwiperSlide>
     </Swiper>

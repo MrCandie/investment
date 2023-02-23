@@ -8,6 +8,7 @@ cloudinary.config({
   api_key: process.env.CLOUD_API_KEY,
   api_secret: process.env.CLOUD_API_SECRET,
 });
+const cookieParser = require("cookie-parser");
 
 const userRouter = require("./routes/user-route");
 const walletRouter = require("./routes/wallet-route");
@@ -43,6 +44,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.send("hello");

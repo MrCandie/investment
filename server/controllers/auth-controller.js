@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const sgMail = require("@sendgrid/mail");
+const crypto = require("crypto");
+const sendEmailVerification = require("./../utils/sendEmailVerification");
 
 const User = require("./../models/user-model");
 const catchAsync = require("./../utils/catch-async");
@@ -24,7 +26,7 @@ const createSendToken = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRESIN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
-    // secure: true,
+    sameSite: false,
   };
 
   res.cookie("jwt", token, cookieOptions);
@@ -40,34 +42,68 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  const token = crypto.randomBytes(32).toString("hex");
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
+    verificationToken: token,
   });
 
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  const origin = "http://localhost:3000/";
 
-  const msg = {
-    to: "akinwumiadekanmi2@gmail.com", // Change to your recipient
-    from: "mrcandie8@gmail.com", // Change to your verified sender
-    subject: "Welcome to Maeve",
-    text: "Sign up was successful",
-    // html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-  };
-
-  const response = await sgMail.send(msg);
-  console.log(response);
+  await sendEmailVerification({
+    name: newUser.name,
+    email: newUser.email,
+    verificationToken: token,
+    origin,
+  });
 
   createSendToken(newUser, 201, res);
 });
 
+exports.sendVerifyRequest = catchAsync(async (req, res, next) => {
+  const origin = "http://localhost:3000/";
+  await sendEmailVerification({
+    name: req.user.name,
+    email: req.user.email,
+    verificationToken: req.user.token,
+    origin,
+  });
+
+  res.status(200).json({
+    status: "success",
+    message: "Check your mail inbox for verification mail",
+  });
+});
+
+exports.verifyEmail = catchAsync(async (req, res, next) => {
+  const { verificationToken, email } = req.body;
+
+  const user = await User.findOneAndUpdate(
+    { email: email },
+    { emailIsVerified: true, verified: Date.now(), verificationToken: "" }
+  );
+
+  if (!user) {
+    return next(new AppError("user not found", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    message: "Email verified!",
+  });
+});
+
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
+
   if (!email || !password)
     next(new AppError("Enter a valid email or passowrd", 400));
+
   const user = await User.findOne({ email: email }).select("+password");
+
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("incorrect email or password", 401));
   }

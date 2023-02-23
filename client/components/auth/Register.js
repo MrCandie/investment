@@ -1,5 +1,7 @@
 import React, { Fragment, useContext, useState } from "react";
 import { useRouter } from "next/router";
+import { setCookie } from "cookies-next";
+
 import Link from "next/link";
 import { createDashboard, signup } from "../../util/auth";
 import Notification from "../UI/notification/Notification";
@@ -29,8 +31,8 @@ export default function Register() {
     e.preventDefault();
 
     const data = {
-      email,
-      name: fullName,
+      email: email.toLowerCase(),
+      name: fullName.toLowerCase(),
       password,
       passwordConfirm,
     };
@@ -38,8 +40,8 @@ export default function Register() {
     try {
       setLoading(true);
       const response = await signup(data);
-      console.log(response);
       localStorage.setItem("token", response.token);
+      setCookie("token", "Bearer " + response.token);
       localStorage.setItem("id", response.data.user._id);
       const userId = localStorage.getItem("id");
       const dashboard = await createDashboard(userId, {}, response.token);

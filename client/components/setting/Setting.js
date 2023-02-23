@@ -23,7 +23,6 @@ export default function Setting({ wallet }) {
 
     try {
       const response = await updateWallets(wallet.id, data, token);
-      console.log(response);
     } catch (err) {
       console.log(err);
     }
