@@ -52,7 +52,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     verificationToken: token,
   });
 
-  const origin = "http://localhost:3000/";
+  // const origin = "http://localhost:3000/";
+  const origin = "https://investment-sigma.vercel.app/";
 
   await sendEmailVerification({
     name: newUser.name,
@@ -65,7 +66,9 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.sendVerifyRequest = catchAsync(async (req, res, next) => {
-  const origin = "http://localhost:3000/";
+  // const origin = "http://localhost:3000/";
+  const origin = "https://investment-sigma.vercel.app/";
+
   await sendEmailVerification({
     name: req.user.name,
     email: req.user.email,
