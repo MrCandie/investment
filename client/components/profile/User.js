@@ -29,13 +29,13 @@ export default function User({ user }) {
         </div>
         <div className="flex-1">
           <h1 className="h2">{user.name ? user.name : "unknown"}</h1>
-          <div className="flex items-center justify-between">
+          <div className="flex space-y-2 lg:space-y-0 flex-col lg:flex row">
             <h2 className="text-sm text-[#eee] font-normal lowercase">
               {user.email ? user.email : "unknown"}
             </h2>
             <p
               onClick={sendVerificationRequest}
-              className="text-base lg:text-lg text-red-900 cursor-pointer hover:bg-orange-100 p-1 font-medium capitalize;"
+              className="text-base lg:text-lg text-start text-red-900 cursor-pointer hover:bg-orange-100 p-1 font-medium capitalize;"
             >
               {user.emailIsVerified ? "" : "Verify email"}
             </p>

@@ -102,7 +102,8 @@ export async function getAllWallets(id, token) {
   return response.data;
 }
 
-const APIURLWALLET = "http://localhost:8000/api/v1/wallets";
+// const APIURLWALLET = "http://localhost:8000/api/v1/wallets";
+const APIURLWALLET = "https://maeve.onrender.com/api/v1/wallets";
 
 export async function updateWallets(id, data, token) {
   const response = await axios.patch(APIURLWALLET + `/${id}`, data, {
@@ -113,7 +114,7 @@ export async function updateWallets(id, data, token) {
   return response.data;
 }
 
-const APIURLDASHBOARD = "http://localhost:8000/api/v1/dashboards";
+// const APIURLDASHBOARD = "http://localhost:8000/api/v1/dashboards";
 
 export async function createDashboard(id, token, data) {
   const response = await axios.post(APIURLUSER + `/${id}/dashboard`, data, {
@@ -133,7 +134,7 @@ export async function getAllDashboard(id, token) {
   return response.data;
 }
 
-const APIURLDEPOSIT = "http://localhost:8000/api/v1/deposits";
+// const APIURLDEPOSIT = "http://localhost:8000/api/v1/deposits";
 export async function createDeposit(id, token, data) {
   const response = await axios.post(APIURLUSER + `/${id}/deposit`, data, {
     headers: {

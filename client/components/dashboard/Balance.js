@@ -26,10 +26,10 @@ export default function Balance({
     >
       <SwiperSlide>
         <div className="balance-container">
-          <h1 className="text-white capitalize text-lg font-medium text-center">
+          <h1 className="text-white capitalize text-base lg:text-lg font-medium text-center">
             Balance
           </h1>
-          <p className="text-2xl text-white font-semi-bold text-center">
+          <p className="text-lg lg:text-2xl text-white font-semi-bold text-center">
             ${balance}
           </p>
           <div className="flex items-center justify-around w-full">

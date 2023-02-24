@@ -85,7 +85,7 @@ export default function Login() {
             />
             <p
               onClick={() => setPasswordModal(true)}
-              className="m-0 text-white text-lg capitalize font-normal cursor-pointer"
+              className="m-0 text-white text-base lg:text-lg capitalize font-normal cursor-pointer"
             >
               forgot password?
             </p>

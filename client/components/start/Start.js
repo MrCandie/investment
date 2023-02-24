@@ -12,13 +12,13 @@ export default function Start({ setScreen }) {
           <h1 className="text-white text-xl text-center font-bold capitalize">
             invest in secure and real life assets
           </h1>
-          <p className="text-white mb-30 text-lg font-normal text-center capitalize">
+          <p className="text-white mb-30 text-base font-normal text-center capitalize">
             create a passive income for yourself!
           </p>
         </div>
         <button
           onClick={() => setScreen("wallet")}
-          className="p-4 bg-orange-500 text-center w-[60%] mx-auto capitalize flex items-center justify-center text-white font-semibold text-xl rounded-lg hover:shadow-xl shadow-lg transition-all duration-300"
+          className="p-4 bg-orange-500 text-center w-[60%] mx-auto capitalize flex items-center justify-center text-white font-semibold text-base lg:text-xl rounded-lg hover:shadow-xl shadow-lg transition-all duration-300"
         >
           get started
         </button>

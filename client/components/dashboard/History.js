@@ -18,7 +18,7 @@ export default function History({ deposits }) {
               className="flex bg-orange-200 p-4 hover:translate-y-[2px]  transition-all duration-300 hover:opacity-80 rounded-md cursor-pointer flex-col space-y-2"
             >
               <div className="flex items-center justify-between">
-                <h2 className="text-black text-lg lg:text-xl font-semibold uppercase text-start">
+                <h2 className="text-black text-base lg:text-xl font-semibold uppercase text-start">
                   {item.plan}
                 </h2>
                 <h4
@@ -28,10 +28,10 @@ export default function History({ deposits }) {
                 </h4>
               </div>
               <div className="flex items-center justify-between">
-                <p className="text-start text-black text-sm">
+                <p className="text-start text-black text-xs lg:text-sm">
                   {item.transactionID}
                 </p>
-                <p>{item.status.toUpperCase()}</p>
+                <p className="confirm-p">{item.status.toUpperCase()}</p>
               </div>
             </div>
           ))}
