@@ -1,16 +1,16 @@
 import axios from "axios";
 
-const APIURLUSER = "http://localhost:8000/api/v1/users";
-// const APIURLUSER = "https://maeve.onrender.com/api/v1/users";
+// const APIURLUSER = "http://localhost:8000/api/v1/users";
+const APIURLUSER = "https://maeve.onrender.com/api/v1/users";
 
-const APIURLDEPOSIT = "http://localhost:8000/api/v1/deposits";
-// const APIURLDEPOSIT = "https://maeve.onrender.com/api/v1/deposits";
+// const APIURLDEPOSIT = "http://localhost:8000/api/v1/deposits";
+const APIURLDEPOSIT = "https://maeve.onrender.com/api/v1/deposits";
 
-const APIURLWITHDRAW = "http://localhost:8000/api/v1/withdraws";
-// const APIURLWITHDRAW = "https://maeve.onrender.com/api/v1/withdraws";
+// const APIURLWITHDRAW = "http://localhost:8000/api/v1/withdraws";
+const APIURLWITHDRAW = "https://maeve.onrender.com/api/v1/withdraws";
 
-const APIURLWALLET = "http://localhost:8000/api/v1/wallets";
-// const APIURLWALLET = "https://maeve.onrender.com/api/v1/wallets";
+// const APIURLWALLET = "http://localhost:8000/api/v1/wallets";
+const APIURLWALLET = "https://maeve.onrender.com/api/v1/wallets";
 
 export async function signup(data) {
   const response = await axios.post(APIURLUSER + "/register", data);
