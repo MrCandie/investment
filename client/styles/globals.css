@@ -99,7 +99,7 @@
   @apply text-green-700 text-base text-center capitalize font-medium;
 }
 .admin-link {
-  @apply flex items-center justify-between p-2 hover:opacity-80 transition-all duration-300 translate-x-2 hover:bg-orange-400 rounded-lg hover:shadow-lg;
+  @apply flex items-center justify-between p-4 cursor-pointer hover:opacity-80 transition-all duration-300 translate-x-2 hover:bg-orange-400 rounded-lg hover:shadow-lg;
 }
 button:disabled {
   background: #ccc;

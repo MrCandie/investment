@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import Deposit from "../../../../components/admin/Deposit";
+import Deposit from "../../../../components/admin/deposit/Deposit";
 import { getAllDeposits } from "../../../../util/auth";
 
 export default function Index() {

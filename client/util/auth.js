@@ -1,7 +1,16 @@
 import axios from "axios";
 
-// const APIURLUSER = "http://localhost:8000/api/v1/users";
-const APIURLUSER = "https://maeve.onrender.com/api/v1/users";
+const APIURLUSER = "http://localhost:8000/api/v1/users";
+// const APIURLUSER = "https://maeve.onrender.com/api/v1/users";
+
+const APIURLDEPOSIT = "http://localhost:8000/api/v1/deposits";
+// const APIURLDEPOSIT = "https://maeve.onrender.com/api/v1/deposits";
+
+const APIURLWITHDRAW = "http://localhost:8000/api/v1/withdraws";
+// const APIURLWITHDRAW = "https://maeve.onrender.com/api/v1/withdraws";
+
+const APIURLWALLET = "http://localhost:8000/api/v1/wallets";
+// const APIURLWALLET = "https://maeve.onrender.com/api/v1/wallets";
 
 export async function signup(data) {
   const response = await axios.post(APIURLUSER + "/register", data);
@@ -129,9 +138,6 @@ export async function getAllWallets(id, token) {
   return response.data;
 }
 
-// const APIURLWALLET = "http://localhost:8000/api/v1/wallets";
-const APIURLWALLET = "https://maeve.onrender.com/api/v1/wallets";
-
 export async function updateWallets(id, data, token) {
   const response = await axios.patch(APIURLWALLET + `/${id}`, data, {
     headers: {
@@ -140,8 +146,6 @@ export async function updateWallets(id, data, token) {
   });
   return response.data;
 }
-
-// const APIURLDASHBOARD = "http://localhost:8000/api/v1/dashboards";
 
 export async function createDashboard(id, token, data) {
   const response = await axios.post(APIURLUSER + `/${id}/dashboard`, data, {
@@ -161,8 +165,6 @@ export async function getAllDashboard(id, token) {
   return response.data;
 }
 
-// const APIURLDEPOSIT = "http://localhost:8000/api/v1/deposits";
-const APIURLDEPOSIT = "https://maeve.onrender.com/api/v1/deposits";
 export async function createDeposit(id, token, data) {
   const response = await axios.post(APIURLUSER + `/${id}/deposit`, data, {
     headers: {
@@ -222,6 +224,33 @@ export async function createWithdraw(id, token, data) {
 
 export async function getAllWithdraws(id, token) {
   const response = await axios.get(APIURLUSER + `/${id}/withdraw`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function getWithdraw(id, token) {
+  const response = await axios.get(APIURLWITHDRAW + `/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function updateWithdraw(id, token, data) {
+  const response = await axios.patch(APIURLWITHDRAW + `/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function deleteWithdraw(id, token) {
+  const response = await axios.delete(APIURLWITHDRAW + `/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

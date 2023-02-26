@@ -15,6 +15,7 @@ router
 
 router
   .route("/:id")
+  .get(authController.protect, withdrawController.getWithdraw)
   .patch(
     authController.protect,
     authController.restrictTo("admin", "guide"),

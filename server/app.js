@@ -14,6 +14,7 @@ const userRouter = require("./routes/user-route");
 const walletRouter = require("./routes/wallet-route");
 const depositRouter = require("./routes/deposit-route");
 const dashboardRouter = require("./routes/dashboard-route");
+const withdrawRouter = require("./routes/withdraw-route");
 const globalErrorController = require("./controllers/error-controller");
 const AppError = require("./utils/app-error");
 
@@ -54,6 +55,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/wallets", walletRouter);
 app.use("/api/v1/dashboards", dashboardRouter);
 app.use("/api/v1/deposits", depositRouter);
+app.use("/api/v1/withdraws", withdrawRouter);
 
 app.all("*", (req, res, next) => {
   return next(new AppError(`Can't find ${req.originalUrl} on this server`));

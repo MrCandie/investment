@@ -49,6 +49,17 @@ exports.updateWithdraw = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getWithdraw = catchAsync(async (req, res, next) => {
+  const withdraw = await Withdraw.findById(req.params.id);
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      withdraw,
+    },
+  });
+});
+
 exports.deleteWithdraw = catchAsync(async (req, res, next) => {
   const withdraw = await Withdraw.findByIdAndDelete(req.params.id);
 

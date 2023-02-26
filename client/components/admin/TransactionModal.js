@@ -14,7 +14,7 @@ export default function TransactionModal({ setShow }) {
             Deposits
           </Link>
           <Link
-            href=""
+            href="/admin/transactions/withdrawals"
             className="text-orange-600 p-4 rounded-lg hover:shadow-lg hover:bg-orange-300 transition-all duration-300 hover:opacity-80 font-semibold text-start"
           >
             withdrawals

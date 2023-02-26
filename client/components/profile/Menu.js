@@ -21,12 +21,14 @@ export default function Menu({ setShow, setShow1, user }) {
           <FaGreaterThan />
         </span>
       </div>
-      <Link href="/admin" className="menu">
-        <p className="h2">admin dashboard</p>
-        <span className="icon">
-          <FaGreaterThan />
-        </span>
-      </Link>
+      {user.role === "admin" && (
+        <Link href="/admin" className="menu">
+          <p className="h2">admin dashboard</p>
+          <span className="icon">
+            <FaGreaterThan />
+          </span>
+        </Link>
+      )}
       <div className="menu">
         <p className="h2">profile ID</p>
         <span className="h4">

@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
-import UserDetails from "../../../components/admin/UserDetails";
+import UserDetails from "../../../components/admin/user/UserDetails";
 import { getUser } from "../../../util/auth";
 
 export default function UserDetail() {
@@ -21,7 +21,7 @@ export default function UserDetail() {
       }
     }
     fetchUser();
-  }, []);
+  }, [user]);
 
   return (
     <Fragment>

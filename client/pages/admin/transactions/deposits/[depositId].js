@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
-import DepositDetails from "../../../../components/admin/DepositDetails";
+import DepositDetails from "../../../../components/admin/deposit/DepositDetails";
 import { getDeposit } from "../../../../util/auth";
 
 export default function DepositDetail() {
