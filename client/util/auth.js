@@ -58,7 +58,7 @@ export async function updatePassword(id, data, token) {
 }
 
 export async function updateUser(id, data, token) {
-  const response = await axios.patch(APIURLUSER + `/updateUser/${id}`, data, {
+  const response = await axios.patch(APIURLUSER + `/${id}`, data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -76,6 +76,33 @@ export async function uploadProfilePicture(data, token) {
 }
 export async function getUser(id, token) {
   const response = await axios.get(APIURLUSER + `/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function deleteUser(id, token) {
+  const response = await axios.delete(APIURLUSER + `/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function updateUserAdmin(id, token, data) {
+  const response = await axios.patch(APIURLUSER + `/updateUser/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function getAllUsers(token) {
+  const response = await axios.get(APIURLUSER, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -135,6 +162,7 @@ export async function getAllDashboard(id, token) {
 }
 
 // const APIURLDEPOSIT = "http://localhost:8000/api/v1/deposits";
+const APIURLDEPOSIT = "https://maeve.onrender.com/api/v1/deposits";
 export async function createDeposit(id, token, data) {
   const response = await axios.post(APIURLUSER + `/${id}/deposit`, data, {
     headers: {
@@ -146,6 +174,33 @@ export async function createDeposit(id, token, data) {
 
 export async function getAllDeposits(id, token) {
   const response = await axios.get(APIURLUSER + `/${id}/deposit`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function getDeposit(id, token) {
+  const response = await axios.get(APIURLDEPOSIT + `/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function updateDeposit(id, token, data) {
+  const response = await axios.patch(APIURLDEPOSIT + `/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function deleteDeposit(id, token) {
+  const response = await axios.delete(APIURLDEPOSIT + `/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

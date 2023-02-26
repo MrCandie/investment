@@ -47,7 +47,7 @@ export default function Balance({
           <h1 className="text-white capitalize text-lg font-medium text-center">
             Total deposits
           </h1>
-          <p className="text-2xl text-white font-semi-bold text-center">
+          <p className="text-lg lg:text-2xl text-white font-semi-bold text-center">
             ${totalDeposit}
           </p>
         </div>
@@ -57,7 +57,7 @@ export default function Balance({
           <h1 className="text-white capitalize text-lg font-medium text-center">
             Total withdrawals
           </h1>
-          <p className="text-2xl text-white font-semi-bold text-center">
+          <p className="text-lg lg:text-2xl text-white font-semi-bold text-center">
             ${allWithdraw}
           </p>
         </div>
@@ -67,7 +67,7 @@ export default function Balance({
           <h1 className="text-white capitalize text-lg font-medium text-center">
             profits
           </h1>
-          <p className="text-2xl text-white font-semi-bold text-center">
+          <p className="text-lg lg:text-2xl text-white font-semi-bold text-center">
             ${dashboard.profit ? dashboard.profit : 0}
           </p>
         </div>
@@ -77,7 +77,7 @@ export default function Balance({
           <h1 className="text-white capitalize text-lg font-medium text-center">
             referral bonus
           </h1>
-          <p className="text-2xl text-white font-semi-bold text-center">
+          <p className="text-lg lg:text-2xl text-white font-semi-bold text-center">
             ${dashboard.referralBonus ? dashboard.balance : 0}
           </p>
           <div className="flex items-center justify-around w-full">

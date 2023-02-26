@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import Link from "next/link";
 
 import { FaGreaterThan } from "react-icons/fa";
 import { AppContext } from "../../util/context";
@@ -20,6 +21,12 @@ export default function Menu({ setShow, setShow1, user }) {
           <FaGreaterThan />
         </span>
       </div>
+      <Link href="/admin" className="menu">
+        <p className="h2">admin dashboard</p>
+        <span className="icon">
+          <FaGreaterThan />
+        </span>
+      </Link>
       <div className="menu">
         <p className="h2">profile ID</p>
         <span className="h4">

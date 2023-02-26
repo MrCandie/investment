@@ -19,7 +19,39 @@ exports.getUser = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getAllUsers = catchAsync(async (req, res, next) => {
+  const users = await User.find();
+
+  return res.status(200).json({
+    status: "success",
+    data: {
+      users,
+    },
+  });
+});
+
 exports.updateUser = catchAsync(async (req, res, next) => {
+  const body = {
+    name: req.body.name,
+    image: req.body.image,
+  };
+  const user = await User.findByIdAndUpdate(req.params.id, body, {
+    new: true,
+    runValidators: true,
+  });
+  if (!user) {
+    return next(new AppError("User not found", 404));
+  }
+
+  return res.status(200).json({
+    status: "success",
+    data: {
+      user,
+    },
+  });
+});
+
+exports.updateUserAdmin = catchAsync(async (req, res, next) => {
   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
@@ -33,6 +65,18 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     data: {
       user,
     },
+  });
+});
+
+exports.deleteUser = catchAsync(async (req, res, next) => {
+  const user = await User.findByIdAndDelete(req.params.id);
+  if (!user) {
+    return next(new AppError("User not found", 404));
+  }
+
+  return res.status(204).json({
+    status: "success",
+    data: null,
   });
 });
 

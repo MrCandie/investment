@@ -46,6 +46,19 @@ exports.updateDeposit = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getDeposit = catchAsync(async (req, res, next) => {
+  const deposit = await Deposit.findById(req.params.id);
+  if (!deposit) {
+    return next(new AppError("deposit transaction not found", 404));
+  }
+  res.status(200).json({
+    status: "success",
+    data: {
+      deposit,
+    },
+  });
+});
+
 exports.deleteDeposit = catchAsync(async (req, res, next) => {
   const deposit = await Deposit.findByIdAndDelete(req.params.id);
   if (!deposit) {

@@ -16,6 +16,7 @@ router
 
 router
   .route("/:id")
+  .get(authController.protect, depositController.getDeposit)
   .patch(
     authController.protect,
     authController.restrictTo("guide", "admin"),

@@ -98,8 +98,17 @@
 .success-text {
   @apply text-green-700 text-base text-center capitalize font-medium;
 }
+.admin-link {
+  @apply flex items-center justify-between p-2 hover:opacity-80 transition-all duration-300 translate-x-2 hover:bg-orange-400 rounded-lg hover:shadow-lg;
+}
 button:disabled {
   background: #ccc;
+}
+.list {
+  @apply flex items-center bg-white space-x-4 hover:bg-orange-300 transition-all cursor-pointer duration-300 hover:translate-x-1 hover:opacity-80 p-2 rounded-lg shadow-md hover:shadow-xl;
+}
+.list-container {
+  @apply flex flex-col space-y-3 overflow-scroll;
 }
 ::-webkit-scrollbar {
   width: 5px;
@@ -114,11 +123,17 @@ button:disabled {
 .bg {
   @apply h-[90vh]  flex items-center justify-center bg-orange-200;
 }
+.bg-mobile {
+  @apply w-full h-[90vh] lg:h-full flex items-center justify-center pb-10 bg-orange-200;
+}
 .deposit {
   @apply text-white bg-green-600 py-1 px-2 rounded-xl shadow-xl text-base;
 }
 .withdraw {
   @apply text-white bg-red-600 py-1 px-2 rounded-xl shadow-xl text-base;
+}
+.user-detail {
+  @apply flex items-center justify-between;
 }
 
 /* Track */

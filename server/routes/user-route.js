@@ -30,16 +30,30 @@ router.patch(
   authController.protect,
   authController.updatePassword
 );
+
+router
+  .route("/")
+  .get(
+    authController.protect,
+    authController.restrictTo("admin"),
+    userController.getAllUsers
+  );
+
 router.patch(
   "/updateUser/:id",
   authController.protect,
-  userController.updateUser
+  authController.restrictTo("admin"),
+  userController.updateUserAdmin
 );
-router.get(
-  "/:id",
-  authController.protect,
-  authController.setUserId,
-  userController.getUser
-);
+
+router
+  .route("/:id")
+  .get(authController.protect, authController.setUserId, userController.getUser)
+  .patch(authController.protect, userController.updateUser)
+  .delete(
+    authController.protect,
+    authController.restrictTo("admin"),
+    userController.deleteUser
+  );
 
 module.exports = router;

@@ -67,7 +67,14 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.sendVerifyRequest = catchAsync(async (req, res, next) => {
   // const origin = "http://localhost:3000/";
-  const origin = "https://investment-sigma.vercel.app";
+  // const origin = "https://investment-sigma.vercel.app";
+  const origin = req.get("origin");
+
+  const origin1 = `${req.get("x-forwarded-proto")}://${req.get(
+    "x-forwarded-host"
+  )}`;
+  console.log(origin1);
+  console.log(req.get("origin"));
 
   await sendEmailVerification({
     name: req.user.name,

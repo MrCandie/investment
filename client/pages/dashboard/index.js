@@ -35,15 +35,15 @@ export default function Index() {
         // withdrawal data
 
         const userWithdraw = withdraw.data.withdraws.filter((item) => {
-          const user = item.user.find((el) => el);
-          return user._id === id;
+          const user = item.user?.find((el) => el);
+          return user?._id === id;
         });
 
         ////////////
         // deposit data
         const userDeposit = deposit.data.deposits.filter((item) => {
-          const user = item.user.find((el) => el);
-          return user._id === id;
+          const user = item.user?.find((el) => el);
+          return user?._id === id;
         });
 
         const confirmedWithdraw = userWithdraw.filter(
@@ -75,8 +75,8 @@ export default function Index() {
         const userData = response.data.dashboards;
 
         const userDashboard = userData.filter((item) => {
-          const user = item.user.find((el) => el);
-          return user._id === id;
+          const user = item.user?.find((el) => el);
+          return user?._id === id;
         });
         const userDashboardDetail = userDashboard.find((el) => el);
         setDashboard(userDashboardDetail);
