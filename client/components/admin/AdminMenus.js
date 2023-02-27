@@ -21,6 +21,12 @@ export default function AdminMenus() {
             <FaGreaterThan />
           </p>
         </div>
+        <Link className="admin-link" href="">
+          <p className="h2">manage bonuses</p>
+          <p className="h2">
+            <FaGreaterThan />
+          </p>
+        </Link>
       </div>
       {show && <TransactionModal setShow={setShow} />}
     </Fragment>

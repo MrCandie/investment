@@ -6,7 +6,7 @@ export default function History({ deposits }) {
   const router = useRouter();
 
   return (
-    <div className="w-full overflow-scroll flex flex-col space-y-2">
+    <div className="w-full max-h-[65%] overflow-scroll flex flex-col space-y-2">
       <h1 className="text text-white">transaction history</h1>
       <hr className="hr" />
       {deposits?.length > 0 ? (
