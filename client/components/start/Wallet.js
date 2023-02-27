@@ -86,7 +86,7 @@ export default function Wallet() {
       setLoading(false);
       setNotification({
         title: "error",
-        text: err.response.data.message,
+        text: err.response.data.message || "Something went wrong",
         status: "error",
       });
       setShow(true);

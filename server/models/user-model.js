@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const ShortUniqueId = require("short-unique-id");
+const validator = require("validator");
 
 const refId = new ShortUniqueId({ length: 10 });
 const profileId = new ShortUniqueId({ length: 20 });
@@ -11,12 +12,15 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       trim: true,
+      maxlength: [20, "name cannot be more than 20 characters"],
     },
     email: {
       type: String,
       required: [true, "user must have an email"],
       unique: [true, "email already exists"],
       trim: true,
+      maxlength: [30, "email cannot be more than 30 characters"],
+      validate: [validator.isEmail, "please enter a valid email address"],
     },
     role: {
       type: String,

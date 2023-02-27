@@ -1,18 +1,31 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const walletSchema = new mongoose.Schema(
   {
     bitcoin: {
       type: String,
+      validate: [
+        validator.isBtcAddress,
+        "please enter a valid bitcoin address",
+      ],
     },
     ethereum: {
       type: String,
+      validate: [
+        validator.isEthereumAddress,
+        "please enter a valid ethereum address",
+      ],
     },
     litecoin: {
       type: String,
     },
     usdt: {
       type: String,
+      validate: [
+        validator.isEthereumAddress,
+        "please enter a valid USDT address",
+      ],
     },
     createdAt: {
       type: Date,
