@@ -21,10 +21,6 @@ export default function EditProfile({ setShow }) {
     e.preventDefault();
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("id");
-    const data = {
-      name,
-      image: `/images/${image.name}`,
-    };
 
     if (!name || !image) {
       setMessage({
@@ -39,7 +35,12 @@ export default function EditProfile({ setShow }) {
       setLoading(true);
 
       const picture = await uploadProfilePicture({ image }, token);
+      const data = {
+        name,
+        image: picture.src,
+      };
       const response = await updateUser(ctx.user.id || id, data, token);
+      console.log(response);
       setLoading(false);
       setShow(false);
       alert("profile updated");

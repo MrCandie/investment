@@ -1,13 +1,17 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const dotenv = require("dotenv");
 const fileUpload = require("express-fileupload");
 const cloudinary = require("cloudinary").v2;
+
+dotenv.config();
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
   api_secret: process.env.CLOUD_API_SECRET,
 });
+
 const cookieParser = require("cookie-parser");
 
 const userRouter = require("./routes/user-route");
