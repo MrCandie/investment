@@ -49,7 +49,7 @@ export default function EditProfile({ setShow }) {
       setLoading(false);
       setMessage({
         title: "Error",
-        text: "request failed... Try again",
+        text: err.response.data.message || "request failed... Try again",
         status: "error",
       });
       setModal(true);

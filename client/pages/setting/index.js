@@ -19,8 +19,8 @@ export default function Index() {
 
         const userData = response.data.wallets;
         const userWallet = userData.filter((item) => {
-          const user = item.user.find((el) => el);
-          return user._id === id;
+          const user = item.user?.find((el) => el);
+          return user?._id === id;
         });
         const userWalletDetail = userWallet.find((el) => el);
 
