@@ -54,19 +54,19 @@ const sendErrProduction = (err, res) => {
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
+  sendErrDev(err, res);
 
-  if (process.env.NODE_ENV === "development") {
-    sendErrDev(err, res);
-  } else if (process.env.NODE_ENV === "production") {
-    let error = { ...err };
-    if (error.name === "castError") error = handleCastErrorDB(error);
-    if (error.code === 11000) error = handleDuplicateFieldsDB(error);
-    if (error.name === "validationError")
-      error = handleValidationErrorDB(error);
+  // if (process.env.NODE_ENV === "development") {
+  // } else if (process.env.NODE_ENV === "production") {
+  //   let error = { ...err };
+  //   if (error.name === "castError") error = handleCastErrorDB(error);
+  //   if (error.code === 11000) error = handleDuplicateFieldsDB(error);
+  //   if (error.name === "validationError")
+  //     error = handleValidationErrorDB(error);
 
-    if (error.name === "JsonWebTokenError") error = handleJsonErrorDB();
-    if (error.name === "TokenExpiredError") error = handleTokenExpireErrorDB();
+  //   if (error.name === "JsonWebTokenError") error = handleJsonErrorDB();
+  //   if (error.name === "TokenExpiredError") error = handleTokenExpireErrorDB();
 
-    sendErrProduction(error, res);
-  }
+  //   sendErrProduction(error, res);
+  // }
 };
