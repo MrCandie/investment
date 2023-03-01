@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
-const sgMail = require("@sendgrid/mail");
+// const nodemailer = require("nodemailer");
+// const sgMail = require("@sendgrid/mail");
 const crypto = require("crypto");
+const speakeasy = require("speakeasy");
+
 const sendEmailVerification = require("./../utils/sendEmailVerification");
 const sendPasswordVerification = require("./../utils/sendPasswordVerification");
 
@@ -9,16 +11,19 @@ const User = require("./../models/user-model");
 const catchAsync = require("./../utils/catch-async");
 const AppError = require("./../utils/app-error");
 
+// setting user ID for populating
 exports.setUserId = (req, res, next) => {
   if (!req.params.id) req.params.id = req.user.id;
   next();
 };
 
+// creating JWT
 const createJWTToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
+// Creating auth send token
 const createSendToken = (user, statusCode, res) => {
   const token = createJWTToken(user.id);
 
@@ -42,29 +47,34 @@ const createSendToken = (user, statusCode, res) => {
   });
 };
 
+// sign up controller
 exports.signup = catchAsync(async (req, res, next) => {
   const token = crypto.randomBytes(32).toString("hex");
+  const secretToken = speakeasy.generateSecret();
+
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     verificationToken: token,
+    secret: secretToken.base32,
   });
 
   // const origin = "http://localhost:3000/";
   const origin = "https://investment-sigma.vercel.app";
 
-  await sendEmailVerification({
-    name: newUser.name,
-    email: newUser.email,
-    verificationToken: token,
-    origin,
-  });
+  // await sendEmailVerification({
+  //   name: newUser.name,
+  //   email: newUser.email,
+  //   verificationToken: token,
+  //   origin,
+  // });
 
   createSendToken(newUser, 201, res);
 });
 
+// email verification request
 exports.sendVerifyRequest = catchAsync(async (req, res, next) => {
   // const origin = "http://localhost:3000/";
   // const origin = "https://investment-sigma.vercel.app";
@@ -89,6 +99,7 @@ exports.sendVerifyRequest = catchAsync(async (req, res, next) => {
   });
 });
 
+// verify email
 exports.verifyEmail = catchAsync(async (req, res, next) => {
   const { verificationToken, email } = req.body;
 
@@ -107,6 +118,7 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
   });
 });
 
+// login controller
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -119,9 +131,74 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError("incorrect email or password", 401));
   }
 
+  if (!user.authIsSet) {
+    res.status(403).json({
+      message: "set up 2FA to continue login",
+      secret: user.secret,
+      token: createJWTToken(user._id),
+    });
+  }
+
   createSendToken(user, 200, res);
 });
 
+// 2FA authentication conrtroller
+exports.authentication = catchAsync(async (req, res, next) => {
+  const { token } = req.body;
+  if (!token) {
+    return next(new AppError("Kindly enter a token", 400));
+  }
+  const user = await User.findById(req.user.id).select("+password");
+  if (!user) {
+    return next(new AppError("User not found", 404));
+  }
+
+  const verified = speakeasy.totp.verify({
+    secret: user.secret,
+    encoding: "base32",
+    token,
+  });
+  if (!verified) {
+    return next(new AppError("Token authentication failed...Try again"));
+  }
+
+  user.authIsSet = true;
+
+  await user.save();
+
+  res.status(200).json({
+    status: "success",
+    verified: verified,
+  });
+});
+
+// token validation
+exports.tokenValidation = catchAsync(async (req, res, next) => {
+  const { token } = req.body;
+  if (!token) {
+    return next(new AppError("Kindly enter a token", 400));
+  }
+  const user = await User.findById(req.user.id).select("+password");
+  if (!user) {
+    return next(new AppError("User not found", 404));
+  }
+
+  const validated = speakeasy.totp.verify({
+    secret: user.secret,
+    encoding: "base32",
+    token,
+  });
+  if (!validated) {
+    return next(new AppError("Token authentication failed...Try again"));
+  }
+
+  res.status(200).json({
+    status: "success",
+    verified: verified,
+  });
+});
+
+// protecting API route controller
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
   if (
@@ -146,20 +223,21 @@ exports.protect = catchAsync(async (req, res, next) => {
     return next(new AppError("user no longer exist", 404));
   }
 
-  if (user.passwordChangedAfter(decoded.iat)) {
-    next(
-      new AppError(
-        "User recently changed password, login again to continue",
-        401
-      )
-    );
-  }
+  // if (user.passwordChangedAfter(decoded.iat)) {
+  //   next(
+  //     new AppError(
+  //       "User recently changed password, login again to continue",
+  //       401
+  //     )
+  //   );
+  // }
 
   req.user = user;
 
   next();
 });
 
+// authorization controller
 exports.restrictTo =
   (...roles) =>
   (req, res, next) => {
@@ -175,6 +253,7 @@ exports.restrictTo =
     next();
   };
 
+// update password controller
 exports.updatePassword = catchAsync(async (req, res, next) => {
   const { currentPassword, password, passwordConfirm } = req.body;
 
@@ -191,6 +270,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 
+// forgot password controller
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   const { email } = req.body;
   if (!email) {
@@ -219,6 +299,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   });
 });
 
+// reset password controller
 exports.resetPassword = catchAsync(async (req, res, next) => {
   const { token } = req.params;
 

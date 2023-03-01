@@ -46,6 +46,16 @@ router.patch(
   userController.updateUserAdmin
 );
 
+router.post(
+  "/authenticate",
+  authController.protect,
+  authController.authentication
+);
+router.post(
+  "/token-validate",
+  authController.protect,
+  authController.tokenValidation
+);
 router
   .route("/:id")
   .get(authController.protect, authController.setUserId, userController.getUser)

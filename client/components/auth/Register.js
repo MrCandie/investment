@@ -40,9 +40,11 @@ export default function Register() {
     try {
       setLoading(true);
       const response = await signup(data);
+      console.log(response);
       localStorage.setItem("token", response.token);
       setCookie("token", "Bearer " + response.token);
       localStorage.setItem("id", response.data.user._id);
+      localStorage.setItem("secret", response.data.user.secret);
       const userId = localStorage.getItem("id");
       const dashboard = await createDashboard(userId, {}, response.token);
 

@@ -27,6 +27,24 @@ export async function verifyEmail(data) {
   return response.data;
 }
 
+export async function authenticate(token, data) {
+  const response = await axios.post(APIURLUSER + "/authenticate", data, {
+    headers: {
+      Authorization: `Bearer ${token} `,
+    },
+  });
+  return response.data;
+}
+
+export async function tokenValidate(token, data) {
+  const response = await axios.post(APIURLUSER + "/token-validate", data, {
+    headers: {
+      Authorization: `Bearer ${token} `,
+    },
+  });
+  return response.data;
+}
+
 export async function forgotPassword(data) {
   const response = await axios.post(APIURLUSER + "/forgot-password", data);
   return response.data;

@@ -8,6 +8,10 @@ import Notification from "../UI/notification/Notification";
 import { AppContext } from "../../util/context";
 import { useRouter } from "next/router";
 import ForgotPassword from "./ForgotPassword";
+import ShowSecret from "../profile/ShowSecret";
+import SetUp2FA from "../profile/SetUp2FA";
+
+import { authenticate } from "../../util/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -26,6 +30,10 @@ export default function Login() {
     status: "",
   });
 
+  const [modal, setModal] = useState(false);
+  const [modal1, setModal1] = useState(false);
+  const [token, setToken] = useState("");
+
   async function loginHandler(e) {
     e.preventDefault();
 
@@ -39,6 +47,7 @@ export default function Login() {
 
       localStorage.setItem("token", response.token);
       localStorage.setItem("id", response.data.user._id);
+      localStorage.setItem("secret", response.data.user.secret);
       setCookie("token", "Bearer " + response.token);
       authContext.login(response.token, response.data.user);
       router.replace("/dashboard");
@@ -51,6 +60,12 @@ export default function Login() {
       setShow(true);
       setTimeout(() => setShow(false), 1000);
     } catch (err) {
+      console.log(err);
+      setToken(err.response.data.token);
+      if (err.response.data.message === "set up 2FA to continue login") {
+        setShow(false);
+        setModal(true);
+      }
       setLoading(false);
       localStorage.removeItem("token");
       setNotification({
@@ -110,6 +125,10 @@ export default function Login() {
         />
       )}
       {loading && <Spinner />}
+      {modal && <ShowSecret setShow={setModal} setShow1={setModal1} />}
+      {modal1 && (
+        <SetUp2FA authFn={authenticate} authToken={token} setShow={setModal1} />
+      )}
       {passwordModal && <ForgotPassword setPasswordModal={setPasswordModal} />}
     </Fragment>
   );

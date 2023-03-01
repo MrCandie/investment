@@ -1,5 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { createWithdraw } from "../../util/auth";
+import SetUp2FA from "../profile/SetUp2FA";
+
+import Notification from "../UI/notification/Notification";
+
+import { tokenValidate } from "../../util/auth";
 
 export default function Withdraw({ setShow, dashboard, balance }) {
   const [asset, setAsset] = useState("");
@@ -9,9 +14,17 @@ export default function Withdraw({ setShow, dashboard, balance }) {
 
   const [loading, setLoading] = useState(false);
 
-  async function withdrawHandler(e) {
-    e.preventDefault();
+  const [modal, setModal] = useState(false);
 
+  const [modal1, setModal1] = useState(false);
+
+  const [notification, setNotification] = useState({
+    text: "",
+    title: "",
+    status: "",
+  });
+
+  async function withdrawHandler() {
     const id = localStorage.getItem("id");
     const token = localStorage.getItem("token");
 
@@ -30,13 +43,23 @@ export default function Withdraw({ setShow, dashboard, balance }) {
     try {
       setLoading(true);
       const response = await createWithdraw(id, token, data);
+      setNotification({
+        title: "Success",
+        text: "withdrawal successful",
+        status: "success",
+      });
+      setModal1(true);
       setLoading(false);
-      setShow(false);
-      alert("withdrawal request successful");
+      setTimeout(() => setShow(false), 3000);
     } catch (err) {
       setLoading(false);
       console.log(err);
-      alert(err.response.data.message || "Something went wrong");
+      setNotification({
+        title: "error",
+        text: err.response.data.message || "Something went wrong",
+        status: "error",
+      });
+      setModal1(true);
       setShow(false);
     }
   }
@@ -116,12 +139,32 @@ export default function Withdraw({ setShow, dashboard, balance }) {
             >
               cancel
             </button>
-            <button disabled={loading} className="button">
+            <button
+              type="button"
+              onClick={() => setModal(true)}
+              disabled={loading}
+              className="button"
+            >
               {loading ? "Loading..." : "withdraw"}
             </button>
           </div>
         </form>
       </div>
+      {modal1 && (
+        <Notification
+          setShow={setModal1}
+          title={notification.title}
+          text={notification.text}
+          status={notification.status}
+        />
+      )}
+      {modal && (
+        <SetUp2FA
+          authFn={tokenValidate}
+          fn={withdrawHandler}
+          setShow={setModal}
+        />
+      )}
     </Fragment>
   );
 }

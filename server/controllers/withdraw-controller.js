@@ -3,6 +3,8 @@ const Withdraw = require("./../models/withdraw-model");
 const catchAsync = require("./../utils/catch-async");
 const AppError = require("./../utils/app-error");
 
+const speakeasy = require("speakeasy");
+
 exports.setUserId = catchAsync(async (req, res, next) => {
   if (!req.body.user) req.body.user = req.user.id;
   next();
